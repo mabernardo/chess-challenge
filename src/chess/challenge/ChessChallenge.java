@@ -1,3 +1,6 @@
+package chess.challenge;
+import java.awt.Point;
+
 /**
  * ChessChallenge.java
  * 
@@ -30,12 +33,15 @@
  */
 public class ChessChallenge {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+    
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        ChessPiece[][] board = new ChessPiece[10][10];
+        
+        
+        
+    }
 
 }
