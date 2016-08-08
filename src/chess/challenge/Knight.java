@@ -5,29 +5,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Rock chess piece implementation.
+ * Knight chess piece implementation.
  * 
  * @author mabernardo
  * @version 1.0
  * @since 1.0
  */
-public class Rock extends ChessPiece {
+public class Knight extends ChessPiece {
 
     @SuppressWarnings("serial")
     private static final List<Point> validMoves = new ArrayList<Point>() {{
-        add(new Point(-1, 0));
-        add(new Point(0, 1));
-        add(new Point(1, 0));
-        add(new Point(0, -1));
+        add(new Point(-2, 1));
+        add(new Point(-1, 2));
+        add(new Point(1, 2));
+        add(new Point(2, 1));
+        add(new Point(2, -1));
+        add(new Point(1, -2));
+        add(new Point(-1, -2));
+        add(new Point(-2, -1));
     }};
 
-    /** 
-     * Constructor defining the initial position.
+    /**
+     * Constructor defining initial position.
+     * 
      * @param position
      * @param limitedRange
      */
-    public Rock(Point position) {
-        super(position, false);
+    public Knight(Point position) {
+        super(position, true);
     }
 
     /* (non-Javadoc)
@@ -40,6 +45,7 @@ public class Rock extends ChessPiece {
 
     @Override
     public String toString() {
-        return "R";
+        return "N";
     }
+
 }
