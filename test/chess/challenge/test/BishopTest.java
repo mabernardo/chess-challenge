@@ -1,10 +1,9 @@
 package chess.challenge.test;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-
-import java.awt.Point;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -12,13 +11,13 @@ import chess.challenge.Bishop;
 
 public class BishopTest {
 
-    Bishop bishop = new Bishop(new Point(0, 0));
     /**
      * Test method for {@link chess.challenge.Bishop#getValidMoves()}.
      */
     @Test
     public void testGetValidMoves() {
-        assertNotNull(bishop.getValidMoves());
+        Bishop bishop = new Bishop(0, 0);
+    	assertNotNull(bishop.getValidMoves());
     }
 
     /**
@@ -26,16 +25,11 @@ public class BishopTest {
      */
     @Test
     public void testBishop() {
-        assertTrue(bishop.getPosition().equals(new Point(0, 0)));
+    	Bishop bishop = new Bishop(0, 1);
+        assertEquals(0, bishop.getRank());
+        assertEquals(1, bishop.getFile());
         assertFalse(bishop.hasLimitedRange());
+        assertTrue("B".equals(bishop.getSymbol()));
+        assertTrue("Bb8".equals(bishop.toString()));
     }
-
-    /**
-     * Test method for {@link chess.challenge.Bishop#toString()}.
-     */
-    @Test
-    public void testToString() {
-        assertTrue("B".equals(bishop.toString()));
-    }
-
 }

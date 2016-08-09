@@ -12,6 +12,9 @@ import java.util.List;
  */
 public final class King extends ChessPiece {
 
+	private static final String SYMBOL = "K";
+	private static final boolean LIMITED_RANGE = true;
+
     @SuppressWarnings("serial")
     private static final List<Point> validMoves = new ArrayList<Point>() {{
         add(new Point(-1, -1));
@@ -29,17 +32,25 @@ public final class King extends ChessPiece {
      * 
      * @param position Initial piece position.
      */
-    public King(Point position) {
-        super(position, true);
+    public King(int rank, int file) {
+        super(rank, file, LIMITED_RANGE);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see chess.challenge.ChessPiece#getValidMoves()
+     */
     @Override
     public List<Point> getValidMoves() {
         return validMoves;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see chess.challenge.ChessPiece#getSymbol()
+     */
     @Override
-    public String toString() {
-        return "K";
+    public String getSymbol() {
+        return SYMBOL;
     }
 }

@@ -12,6 +12,9 @@ import java.util.List;
  * @since 1.0
  */
 public class Bishop extends ChessPiece {
+	
+	private static final String SYMBOL = "B";
+	private static final boolean LIMITED_RANGE = false;
 
     @SuppressWarnings("serial")
     private static final List<Point> validMoves = new ArrayList<Point>() {{
@@ -25,10 +28,10 @@ public class Bishop extends ChessPiece {
      * Constructor defining initial position.
      * 
      * @param position
-     * @param limitedRange
+     * @param LIMITED_RANGE
      */
-    public Bishop(Point position) {
-        super(position, false);
+    public Bishop(int rank, int file) {
+        super(rank, file, LIMITED_RANGE);
     }
 
     /* (non-Javadoc)
@@ -39,8 +42,13 @@ public class Bishop extends ChessPiece {
         return validMoves;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see chess.challenge.ChessPiece#getSymbol()
+     */
     @Override
-    public String toString() {
-        return "B";
-    }
+	public String getSymbol() {
+		return SYMBOL;
+	}
+
 }

@@ -1,9 +1,8 @@
 package chess.challenge.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
-import java.awt.Point;
 
 import org.junit.Test;
 
@@ -11,31 +10,20 @@ import chess.challenge.Knight;
 
 public class KnightTest {
 
-    Knight knight = new Knight(new Point(0, 0));
-
-    /**
-     * Test method for {@link chess.challenge.Knight#getValidMoves()}.
-     */
     @Test
     public void testGetValidMoves() {
+    	Knight knight = new Knight(0, 1);
         assertNotNull(knight.getValidMoves());
     }
 
-    /**
-     * Test method for {@link chess.challenge.Knight#Knight(java.awt.Point)}.
-     */
     @Test
     public void testKnight() {
-        assertTrue(knight.getPosition().equals(new Point(0, 0)));
+        Knight knight = new Knight(0, 1);
+        assertEquals(0, knight.getRank());
+        assertEquals(1, knight.getFile());
         assertTrue(knight.hasLimitedRange());
-    }
-
-    /**
-     * Test method for {@link java.lang.Object#toString()}.
-     */
-    @Test
-    public void testToString() {
-        assertTrue("N".equals(knight.toString()));
+        assertTrue("N".equals(knight.getSymbol()));
+        assertTrue("Nb8".equals(knight.toString()));
     }
 
 }

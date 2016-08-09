@@ -1,10 +1,9 @@
 package chess.challenge.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
-import java.awt.Point;
 
 import org.junit.Test;
 
@@ -13,31 +12,19 @@ import chess.challenge.Rock;
 
 public class RockTest {
 
-    Rock rock = new Rock(new Point(0, 0));
-
-    /**
-     * Test method for {@link chess.challenge.Rock#getValidMoves()}.
-     */
     @Test
     public void testGetValidMoves() {
-        assertNotNull(rock.getValidMoves());
+        Rock rock = new Rock(0, 0);
+    	assertNotNull(rock.getValidMoves());
     }
 
-    /**
-     * Test method for {@link chess.challenge.Rock#Rock(java.awt.Point)}.
-     */
     @Test
     public void testRock() {
-        assertTrue(rock.getPosition().equals(new Point(0, 0)));
+        Rock rock = new Rock(0, 1);
+        assertEquals(0, rock.getRank());
+        assertEquals(1, rock.getFile());
         assertFalse(rock.hasLimitedRange());
+        assertTrue("R".equals(rock.getSymbol()));
+        assertTrue("Rb8".equals(rock.toString()));
     }
-
-    /**
-     * Test method for {@link java.lang.Object#toString()}.
-     */
-    @Test
-    public void testToString() {
-        assertTrue("R".equals(rock.toString()));
-    }
-
 }

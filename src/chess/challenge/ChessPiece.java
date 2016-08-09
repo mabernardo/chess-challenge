@@ -1,5 +1,6 @@
 package chess.challenge;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,8 @@ import java.util.List;
  * @since 1.0
  */
 public abstract class ChessPiece {
-    private final Point position;
+    private final int rank;
+    private final int file;
     private final boolean limitedRange;
 
     /**
@@ -20,17 +22,10 @@ public abstract class ChessPiece {
      * @param position Initial piece position.
      * @param limitedRange Sets if the piece has a limited range.
      */
-    protected ChessPiece(Point position, boolean limitedRange) {
-        this.position = position;
+    protected ChessPiece(int rank, int file, boolean limitedRange) {
+        this.rank = rank;
+        this.file = file;
         this.limitedRange = limitedRange;
-    }
-
-    /**
-     * Returns the current position of the piece.
-     * @return Piece position.
-     */
-    public Point getPosition() {
-        return position;
     }
 
     /**
@@ -46,6 +41,13 @@ public abstract class ChessPiece {
      * @return List of valid moves.
      */
     public abstract List<Point> getValidMoves();
+    
+    /**
+     * Gets the symbol representing the piece.
+     * 
+     * @return symbol representing the piece.
+     */
+    public abstract String getSymbol();
 
     /**
      * Checks if the piece threatens the specified point based on the board 
@@ -58,4 +60,59 @@ public abstract class ChessPiece {
         // TODO: Code to check if the piece threatens the Point p
         return false;
     }
+
+    /**
+     * Returns a list of coordinates that the piece threatens.
+     * 
+     * @param board the board where the threat area will be tested
+     * @return list of coordinates that the piece threatens.
+     */
+    public List<Point> threatArea(ChessBoard board) {
+    	List<Point> threats = new ArrayList<>();
+    	Point p = new Point(this.rank, this.file);
+
+    	if (this.hasLimitedRange()) {
+	        for (Point p1 : this.getValidMoves()) {
+                int x1 = p.x + p1.x;
+                int y1 = p.y + p1.y;
+                if ((x1 >= 0 && x1 < board.getRanks())
+                		&& (y1 >= 0 && y1 < board.getFiles())) {
+                	threats.add(new Point(x1, y1));
+                }
+        	}
+        } else {
+	        for (Point p1 : this.getValidMoves()) {
+                int x1 = p.x + p1.x;
+                int y1 = p.y + p1.y;
+                int distance = 1;
+                while ((x1 >= 0 && x1 < board.getRanks())
+                		&& (y1 >= 0 && y1 < board.getFiles())) {
+                	threats.add(new Point(x1, y1));
+                    
+                	distance++;
+                	x1 = p.x + p1.x * distance;
+                    y1 = p.y + p1.y * distance;
+                }
+        	}
+        }
+    	return threats;
+    }
+
+	public int getRank() {
+		return rank;
+	}
+
+	public int getFile() {
+		return file;
+	}
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return this.getSymbol() + Character.toString((char)(97 + file)) +  String.valueOf(rank + Math.abs(rank - 8));
+    }
+
 }

@@ -1,10 +1,9 @@
 package chess.challenge.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-
-import java.awt.Point;
 
 import org.junit.Test;
 
@@ -12,30 +11,19 @@ import chess.challenge.Queen;
 
 public class QueenTest {
 
-    Queen queen = new Queen(new Point(0, 0));
-    /**
-     * Test method for {@link chess.challenge.Queen#getValidMoves()}.
-     */
     @Test
     public void testGetValidMoves() {
+        Queen queen = new Queen(0, 0);
         assertNotNull(queen.getValidMoves());
     }
 
-    /**
-     * Test method for {@link chess.challenge.Queen#Queen(java.awt.Point)}.
-     */
     @Test
     public void testQueen() {
-        assertTrue(queen.getPosition().equals(new Point(0, 0)));
+        Queen queen = new Queen(0, 1);
+        assertEquals(0, queen.getRank());
+        assertEquals(1, queen.getFile());
         assertFalse(queen.hasLimitedRange());
+        assertTrue("Q".equals(queen.getSymbol()));
+        assertTrue("Qb8".equals(queen.toString()));
     }
-
-    /**
-     * Test method for {@link java.lang.Object#toString()}.
-     */
-    @Test
-    public void testToString() {
-        assertTrue("Q".equals(queen.toString()));
-    }
-
 }

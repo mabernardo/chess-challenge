@@ -13,6 +13,9 @@ import java.util.List;
  */
 public class Knight extends ChessPiece {
 
+	private static final String SYMBOL = "N";
+	private static final boolean LIMITED_RANGE = true;
+
     @SuppressWarnings("serial")
     private static final List<Point> validMoves = new ArrayList<Point>() {{
         add(new Point(-2, 1));
@@ -29,10 +32,10 @@ public class Knight extends ChessPiece {
      * Constructor defining initial position.
      * 
      * @param position
-     * @param limitedRange
+     * @param LIMITED_RANGE
      */
-    public Knight(Point position) {
-        super(position, true);
+    public Knight(int rank, int file) {
+        super(rank, file, LIMITED_RANGE);
     }
 
     /* (non-Javadoc)
@@ -43,9 +46,12 @@ public class Knight extends ChessPiece {
         return validMoves;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see chess.challenge.ChessPiece#getSymbol()
+     */
     @Override
-    public String toString() {
-        return "N";
+    public String getSymbol() {
+        return SYMBOL;
     }
-
 }
