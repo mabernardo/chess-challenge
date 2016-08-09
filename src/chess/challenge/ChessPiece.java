@@ -50,18 +50,6 @@ public abstract class ChessPiece {
     public abstract String getSymbol();
 
     /**
-     * Checks if the piece threatens the specified point based on the board 
-     * dimensions.
-     * 
-     * @param p Point to checked.
-     * @return boolean indicating if the point is threatened by the piece.
-     */
-    public boolean threatens(Point p, int boardSizeM, int boardSizeN) {
-        // TODO: Code to check if the piece threatens the Point p
-        return false;
-    }
-
-    /**
      * Returns a list of coordinates that the piece threatens.
      * 
      * @param board the board where the threat area will be tested
