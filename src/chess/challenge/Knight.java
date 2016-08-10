@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class Knight extends ChessPiece {
 
-	private static final String SYMBOL = "N";
-	private static final boolean LIMITED_RANGE = true;
+    public static final String SYMBOL = "N";
+    private static final boolean LIMITED_RANGE = true;
 
     @SuppressWarnings("serial")
     private static final List<Point> validMoves = new ArrayList<Point>() {{

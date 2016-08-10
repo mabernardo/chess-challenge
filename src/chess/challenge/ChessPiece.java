@@ -56,43 +56,58 @@ public abstract class ChessPiece {
      * @return list of coordinates that the piece threatens.
      */
     public List<Point> threatArea(ChessBoard board) {
-    	List<Point> threats = new ArrayList<>();
-    	Point p = new Point(this.rank, this.file);
+        List<Point> threats = new ArrayList<>();
+        Point p = new Point(this.rank, this.file);
 
-    	if (this.hasLimitedRange()) {
-	        for (Point p1 : this.getValidMoves()) {
+        if (this.hasLimitedRange()) {
+            for (Point p1 : this.getValidMoves()) {
                 int x1 = p.x + p1.x;
                 int y1 = p.y + p1.y;
                 if ((x1 >= 0 && x1 < board.getRanks())
-                		&& (y1 >= 0 && y1 < board.getFiles())) {
-                	threats.add(new Point(x1, y1));
+                        && (y1 >= 0 && y1 < board.getFiles())) {
+                    threats.add(new Point(x1, y1));
                 }
-        	}
+            }
         } else {
-	        for (Point p1 : this.getValidMoves()) {
+            for (Point p1 : this.getValidMoves()) {
                 int x1 = p.x + p1.x;
                 int y1 = p.y + p1.y;
                 int distance = 1;
-                while ((x1 >= 0 && x1 < board.getRanks())
-                		&& (y1 >= 0 && y1 < board.getFiles())) {
-                	threats.add(new Point(x1, y1));
-                    
-                	distance++;
-                	x1 = p.x + p1.x * distance;
+                while ((x1 >= 0 && x1 < board.getRanks()) 
+                        && (y1 >= 0 && y1 < board.getFiles())) {
+                    threats.add(new Point(x1, y1));
+                    distance++;
+                    x1 = p.x + p1.x * distance;
                     y1 = p.y + p1.y * distance;
                 }
-        	}
+            }
         }
-    	return threats;
+        return threats;
     }
 
-	public int getRank() {
-		return rank;
-	}
+    public static ChessPiece newFromSymbol(String symbol, int rank, int file) {
+        switch (symbol) {
+        case King.SYMBOL:
+            return new King(rank, file);
+        case Queen.SYMBOL:
+            return new Queen(rank, file);
+        case Rock.SYMBOL:
+            return new Rock(rank, file);
+        case Knight.SYMBOL:
+            return new Knight(rank, file);
+        case Bishop.SYMBOL:
+            return new Bishop(rank, file);
+        }
+        return null;
+    }
 
-	public int getFile() {
-		return file;
-	}
+    public int getRank() {
+        return rank;
+    }
+    
+    public int getFile() {
+        return file;
+    }
 
     /*
      * (non-Javadoc)

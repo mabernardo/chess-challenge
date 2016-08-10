@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class Rock extends ChessPiece {
 
-	private static final String SYMBOL = "R";
-	private static final boolean LIMITED_RANGE = false;
+    public static final String SYMBOL = "R";
+    private static final boolean LIMITED_RANGE = false;
 
     @SuppressWarnings("serial")
     private static final List<Point> validMoves = new ArrayList<Point>() {{
@@ -41,8 +41,8 @@ public class Rock extends ChessPiece {
         return validMoves;
     }
 
-	@Override
-	public String getSymbol() {
-		return SYMBOL;
-	}
+    @Override
+    public String getSymbol() {
+        return SYMBOL;
+    }
 }

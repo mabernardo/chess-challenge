@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class Queen extends ChessPiece {
 
-	private static final String SYMBOL = "Q";
-	private static final boolean LIMITED_RANGE = false;
+    public static final String SYMBOL = "Q";
+    private static final boolean LIMITED_RANGE = false;
 
     @SuppressWarnings("serial")
     private static final List<Point> validMoves = new ArrayList<Point>() {{
@@ -50,8 +50,8 @@ public class Queen extends ChessPiece {
      * (non-Javadoc)
      * @see chess.challenge.ChessPiece#getSymbol()
      */
-	@Override
-	public String getSymbol() {
-		return SYMBOL;
-	}
+    @Override
+    public String getSymbol() {
+        return SYMBOL;
+    }
 }

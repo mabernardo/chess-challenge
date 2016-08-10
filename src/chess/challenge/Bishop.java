@@ -12,9 +12,9 @@ import java.util.List;
  * @since 1.0
  */
 public class Bishop extends ChessPiece {
-	
-	private static final String SYMBOL = "B";
-	private static final boolean LIMITED_RANGE = false;
+
+    public static final String SYMBOL = "B";
+    private static final boolean LIMITED_RANGE = false;
 
     @SuppressWarnings("serial")
     private static final List<Point> validMoves = new ArrayList<Point>() {{
@@ -47,8 +47,8 @@ public class Bishop extends ChessPiece {
      * @see chess.challenge.ChessPiece#getSymbol()
      */
     @Override
-	public String getSymbol() {
-		return SYMBOL;
-	}
+    public String getSymbol() {
+        return SYMBOL;
+    }
 
 }
