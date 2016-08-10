@@ -2,6 +2,7 @@ package chess.challenge.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -87,33 +88,35 @@ public class ChessBoardTest {
      */
     @Test
     public void testPutPiece() {
-    	ChessBoard board = new ChessBoard(8, 8);
-        King k = new King(0, 0);
-        Queen q = new Queen(2, 1);
+    	ChessBoard board = new ChessBoard(7, 7);
         
-        assertTrue(board.putPiece(k));
-        assertTrue(board.putPiece(q));
-        /*
-        assertTrue("K".equals(board.getBoardState()[0][0]));
-        assertTrue("X".equals(board.getBoardState()[0][1]));
-        assertTrue("X".equals(board.getBoardState()[1][0]));
-        assertTrue("X".equals(board.getBoardState()[1][1]));
-        assertNull(board.getBoardState()[0][2]);
-        assertNull(board.getBoardState()[1][2]);
-        assertNull(board.getBoardState()[2][0]);
-        assertNull(board.getBoardState()[2][1]);
-        assertNull(board.getBoardState()[2][2]);
-        
-        
-        assertFalse(board.putPiece(k, 0, 0));
-        assertFalse(board.putPiece(k, 0, 1));
-        assertFalse(board.putPiece(k, 1, 1));
-        assertTrue(board.putPiece(k, 0, 2));
-        assertFalse(board.putPiece(q, 2, 0));
-        assertFalse(board.putPiece(q, 1, 1));
-        assertTrue(board.putPiece(q, 2, 1));
-        */
-        board.printBoard();
+        assertTrue(board.putPiece(new King(3, 3)) && "K".equals(board.getBoardState()[3][3]));
+        assertFalse(board.putPiece(new Queen(0, 0)));
+        assertFalse(board.putPiece(new Queen(0, 6)));
+        assertFalse(board.putPiece(new Queen(6, 0)));
+        assertFalse(board.putPiece(new Queen(6, 6)));
+        assertFalse(board.putPiece(new Queen(0, 3)));
+        assertFalse(board.putPiece(new Queen(3, 6)));
+        assertFalse(board.putPiece(new Queen(6, 3)));
+        assertFalse(board.putPiece(new Queen(3, 0)));
+
+        assertTrue(board.getBoardState()[0][0] == null);
+        assertTrue(board.getBoardState()[0][6] == null);
+        assertTrue(board.getBoardState()[6][0] == null);
+        assertTrue(board.getBoardState()[6][6] == null);
+        assertTrue(board.getBoardState()[0][3] == null);
+        assertTrue(board.getBoardState()[3][6] == null);
+        assertTrue(board.getBoardState()[6][3] == null);
+        assertTrue(board.getBoardState()[3][0] == null);
+
+        assertTrue(board.putPiece(new King(1, 1)));
+        assertTrue(board.putPiece(new King(1, 3)));
+        assertTrue(board.putPiece(new King(1, 5)));
+        assertTrue(board.putPiece(new King(3, 1)));
+        assertTrue(board.putPiece(new King(3, 5)));
+        assertTrue(board.putPiece(new King(5, 1)));
+        assertTrue(board.putPiece(new King(5, 3)));
+        assertTrue(board.putPiece(new King(5, 5)));
     }
 
 }

@@ -50,7 +50,6 @@ public class ChessBoard {
             return false;
         }
         
-        boardState[p.x][p.y] = new String(piece.toString());
         List<Point> threatList = piece.threatArea(this);
         for (Point tp : threatList) {
             String cell = boardState[tp.x][tp.y];
@@ -58,6 +57,7 @@ public class ChessBoard {
         		return false;
         	}
         }
+        boardState[p.x][p.y] = new String(piece.getSymbol());
         markThreatArea(threatList);
 
         return true;
