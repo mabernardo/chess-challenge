@@ -5,8 +5,11 @@ package chess.challenge;
 
 import java.awt.Point;
 import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * Object representing a chess board with variable dimensions.
@@ -23,6 +26,8 @@ public class ChessBoard {
     private final int ranks;
     private final int files;
     private String[][] boardState;
+
+    public static int calculations;
 
     /**
      * Creates a board with dimensions ranks x files.
@@ -89,30 +94,59 @@ public class ChessBoard {
         return true;
     }
 
+    /**
+     * Update the boarsState with the cells list passed in the parameter.
+     * 
+     * @param threatList
+     */
     private void markThreatArea(List<Point> threatList) {
         for (Point tp : threatList) {
             boardState[tp.x][tp.y] = new String(THREAT_MARKER);
         }
     }
 
-    public static void printConfigurations(ChessBoard board, Queue<ChessPiece> pieces) {
+    /**
+     * Calculates all possible configurations for which all of the pieces can be
+     * placed on board without threatening each other.
+     * 
+     * @param board
+     *            board with the dimensions needed for the calculation.
+     * @param pieces
+     *            pieces to be placed on the boards.
+     * @return Set of unique configurations.
+     */
+    public static Set<ChessBoard> listConfigurations(ChessBoard board, Queue<ChessPiece> pieces) {
         ChessPiece p = pieces.poll();
         ChessBoard testBoard = new ChessBoard(board);
+        Set<ChessBoard> configs = new LinkedHashSet<>();
         for (int m = 0; m < board.getRanks(); ++m) {
             for (int n = 0; n < board.getFiles(); ++n) {
+                calculations++;
                 ChessPiece testPiece = ChessPiece.newFromSymbol(p.getSymbol(), m, n);
                 if (testBoard.putPiece(testPiece)) {
                     if (pieces.isEmpty()) {
-                        testBoard.printBoard();
+                        configs.add(testBoard);
                     } else {
                         Queue<ChessPiece> remainingPieces = new ArrayDeque<>(pieces);
-                        printConfigurations(testBoard, remainingPieces);
+                        Set<ChessBoard> c = listConfigurations(testBoard, remainingPieces);
+                        configs.addAll(c);
                     }
                     testBoard = new ChessBoard(board);
                 }
-
             }
         }
+        return configs;
+    }
+
+    public static <T> List<T> rotate(List<T> aL) {
+        if (aL.size() == 0)
+            return aL;
+
+        T element = null;
+        element = aL.remove(aL.size() - 1);
+        aL.add(0, element);
+
+        return aL;
     }
 
     /**
@@ -138,6 +172,34 @@ public class ChessBoard {
 
     public String[][] getBoardState() {
         return boardState;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.deepHashCode(boardState);
+        result = prime * result + files;
+        result = prime * result + ranks;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ChessBoard other = (ChessBoard) obj;
+        if (!Arrays.deepEquals(boardState, other.boardState))
+            return false;
+        if (files != other.files)
+            return false;
+        if (ranks != other.ranks)
+            return false;
+        return true;
     }
 
 }

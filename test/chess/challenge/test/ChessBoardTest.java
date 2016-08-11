@@ -2,10 +2,12 @@ package chess.challenge.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,28 +34,18 @@ public class ChessBoardTest {
     public void testChessBoard() {
         ChessBoard board = new ChessBoard(7, 7);
         assertTrue(board.putPiece(new King(3, 3)));
-        board.printBoard();
-        System.out.println();
         
         board = new ChessBoard(7, 7);
         assertTrue(board.putPiece(new Queen(3, 3)));
-        board.printBoard();
-        System.out.println();
 
         board = new ChessBoard(7, 7);
         assertTrue(board.putPiece(new Rock(3, 3)));
-        board.printBoard();
-        System.out.println();
 
         board = new ChessBoard(7, 7);
         assertTrue(board.putPiece(new Knight(3, 3)));
-        board.printBoard();
-        System.out.println();
 
         board = new ChessBoard(7, 7);
         assertTrue(board.putPiece(new Bishop(3, 3)));
-        board.printBoard();
-        System.out.println();
     }
 
     @Test
@@ -149,13 +141,55 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void testPrintConfigurations() {
+    public void testPrintConfigurations3x3x3() {
         ChessBoard board = new ChessBoard(3, 3);
         Queue<ChessPiece> pieces = new ArrayDeque<>();
-        pieces.add(new King(0, 0));
-        pieces.add(new King(0, 0));
-        pieces.add(new Rock(0, 0));
+        pieces.add(new King());
+        pieces.add(new King());
+        pieces.add(new Rock());
         
-        ChessBoard.printConfigurations(board, pieces);
+        ChessBoard.calculations = 0;
+        Set<ChessBoard> boards = ChessBoard.listConfigurations(board, pieces);
+        for (ChessBoard b : boards) {
+            b.printBoard();
+        }
+        System.out.println(ChessBoard.calculations);
+    }
+
+    @Test
+    public void testPrintConfigurations4x4x6() {
+        ChessBoard board = new ChessBoard(4, 4);
+        Queue<ChessPiece> pieces = new ArrayDeque<>();
+        pieces.add(new Rock());
+        pieces.add(new Rock());
+        pieces.add(new Knight());
+        pieces.add(new Knight());
+        pieces.add(new Knight());
+        pieces.add(new Knight());
+
+        ChessBoard.calculations = 0;
+        Set<ChessBoard> boards = ChessBoard.listConfigurations(board, pieces);
+        for (ChessBoard b : boards) {
+            b.printBoard();
+        }
+        System.out.println(ChessBoard.calculations);
+    }
+
+    @Test
+    public void testEquals() {
+        ChessBoard board1 = new ChessBoard(3, 3);
+        ChessBoard board2 = new ChessBoard(3, 3);
+        assertEquals(board1, board2);
+
+        board1.putPiece(new King(0, 0));
+        board2.putPiece(new King(0, 0));
+        assertEquals(board1, board2);
+
+        board2.putPiece(new King(2, 2));
+        assertNotEquals(board1, board2);
+
+        board1 = new ChessBoard(3, 3);
+        board2 = new ChessBoard(2, 2);
+        assertNotEquals(board1, board2);
     }
 }
