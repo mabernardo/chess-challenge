@@ -2,7 +2,7 @@
 Finds all unique configurations of a set of normal chess pieces on a chess board with dimensions MxN where none of the pieces is in a position to take any of the others.
 
 ## Building
-Clone the project en run:
+Clone the project and run:
 
 	./build.sh
 
