@@ -28,6 +28,13 @@ public final class King extends ChessPiece {
     }};
 
     /**
+     * Default constructor.
+     */
+    public King() {
+        super(0, 0, LIMITED_RANGE);
+    }
+
+    /**
      * Constructor defining initial position.
      * 
      * @param position Initial piece position.

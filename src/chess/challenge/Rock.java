@@ -24,6 +24,13 @@ public class Rock extends ChessPiece {
         add(new Point(0, -1));
     }};
 
+    /**
+     * Default constructor.
+     */
+    public Rock() {
+        super(0, 0, LIMITED_RANGE);
+    }
+
     /** 
      * Constructor defining the initial position.
      * @param position

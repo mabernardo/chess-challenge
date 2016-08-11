@@ -29,6 +29,13 @@ public class Queen extends ChessPiece {
     }};
 
     /**
+     * Default constructor.
+     */
+    public Queen() {
+        super(0, 0, LIMITED_RANGE);
+    }
+
+    /**
      * Constructor defining initial position.
      * 
      * @param position

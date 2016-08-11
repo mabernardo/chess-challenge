@@ -1,47 +1,55 @@
 package chess.challenge;
-import java.awt.Point;
-
-/**
- * ChessChallenge.java
- * 
- * MIT License
- * 
- * Copyright (C) 2016  Marcio Bernardo
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+import java.util.ArrayDeque;
+import java.util.Queue;
+import java.util.Scanner;
+import java.util.Set;
 
 /**
  * @author mabernardo
- *
  */
 public class ChessChallenge {
 
-    
-    /**
-     * @param args
-     */
     public static void main(String[] args) {
-        ChessPiece[][] board = new ChessPiece[10][10];
+        Scanner scan = new Scanner(System.in);
+        int ranks = scan.nextInt();
+        int files = scan.nextInt();
+        int kings = scan.nextInt();
+        int queens = scan.nextInt();
+        int bishops = scan.nextInt();
+        int rocks = scan.nextInt();
+        int knights = scan.nextInt();
+        scan.close();
         
-        
-        
+        ChessBoard board = new ChessBoard(ranks, files);
+        Queue<ChessPiece> pieces = new ArrayDeque<>();
+        while (kings-- > 0) {
+            pieces.add(new King());
+        }
+        while (queens-- > 0) {
+            pieces.add(new Queen());
+        }
+        while (bishops-- > 0) {
+            pieces.add(new Bishop());
+        }
+        while (rocks-- > 0) {
+            pieces.add(new Rock());
+        }
+        while (knights-- > 0) {
+            pieces.add(new Knight());
+        }
+
+        long startTime = System.currentTimeMillis();
+        Set<ChessBoard> configs = ChessBoard.listConfigurations(board, pieces);
+        long stopTime = System.currentTimeMillis();
+        long elapsedTime = stopTime - startTime;
+        for (ChessBoard b : configs) {
+            b.printBoard();
+        }
+        if (args.length > 0 && "-v".equals(args[0])) {
+            System.out.println(ChessBoard.calculations + " calculations resulted in "
+                    + configs.size() + " unique combinations in " 
+                    + (double) elapsedTime / 1000.0 + " seconds.");
+        }
     }
 
 }

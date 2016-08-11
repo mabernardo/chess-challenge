@@ -25,6 +25,13 @@ public class Bishop extends ChessPiece {
     }};
 
     /**
+     * Default constructor.
+     */
+    public Bishop() {
+        super(0, 0, LIMITED_RANGE);
+    }
+
+    /**
      * Constructor defining initial position.
      * 
      * @param position

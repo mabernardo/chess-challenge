@@ -28,6 +28,10 @@ public class Knight extends ChessPiece {
         add(new Point(-2, -1));
     }};
 
+    public Knight() {
+        super(0, 0, LIMITED_RANGE);
+    }
+
     /**
      * Constructor defining initial position.
      * 
