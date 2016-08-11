@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -149,10 +148,9 @@ public class ChessBoardTest {
         pieces.add(new Rock());
         
         ChessBoard.calculations = 0;
-        Set<ChessBoard> boards = ChessBoard.listConfigurations(board, pieces);
-        for (ChessBoard b : boards) {
-            b.printBoard();
-        }
+        ChessBoard.uniqueBoards = 0;
+        ChessBoard.listConfigurationsV2(board, pieces, null, 0, 0);
+        System.out.println(ChessBoard.uniqueBoards);
         System.out.println(ChessBoard.calculations);
     }
 
@@ -168,10 +166,9 @@ public class ChessBoardTest {
         pieces.add(new Knight());
 
         ChessBoard.calculations = 0;
-        Set<ChessBoard> boards = ChessBoard.listConfigurations(board, pieces);
-        for (ChessBoard b : boards) {
-            b.printBoard();
-        }
+        ChessBoard.uniqueBoards = 0;
+        ChessBoard.listConfigurationsV2(board, pieces, null, 0, 0);
+        System.out.println(ChessBoard.uniqueBoards);
         System.out.println(ChessBoard.calculations);
     }
 

@@ -2,7 +2,6 @@ package chess.challenge;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  * @author mabernardo
@@ -39,15 +38,12 @@ public class ChessChallenge {
         }
 
         long startTime = System.currentTimeMillis();
-        Set<ChessBoard> configs = ChessBoard.listConfigurations(board, pieces);
+        ChessBoard.listConfigurationsV2(board, pieces, null, 0, 0);
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
-        for (ChessBoard b : configs) {
-            b.printBoard();
-        }
         if (args.length > 0 && "-v".equals(args[0])) {
             System.out.println(ChessBoard.calculations + " calculations resulted in "
-                    + configs.size() + " unique combinations in " 
+                    + ChessBoard.uniqueBoards + " unique combinations in " 
                     + (double) elapsedTime / 1000.0 + " seconds.");
         }
     }

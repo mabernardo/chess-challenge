@@ -4,6 +4,7 @@
 package chess.challenge;
 
 import java.awt.Point;
+import java.io.PrintStream;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -27,7 +28,8 @@ public class ChessBoard {
     private final int files;
     private String[][] boardState;
 
-    public static int calculations;
+    public static int calculations = 0;
+    public static int uniqueBoards = 0;
 
     /**
      * Creates a board with dimensions ranks x files.
@@ -138,6 +140,36 @@ public class ChessBoard {
         return configs;
     }
 
+    public static Set<ChessBoard> listConfigurationsV2(ChessBoard board, Queue<ChessPiece> pieces, String previous, int x, int y) {
+        ChessPiece p = pieces.poll();
+        ChessBoard testBoard = new ChessBoard(board);
+        Set<ChessBoard> configs = new LinkedHashSet<>();
+        int startM = 0;
+        int startN = 0;
+        if (p.getSymbol().equals(previous)) {
+            startM = x;
+            startN = y;
+        }
+        for (int m = startM; m < board.getRanks(); ++m) {
+            for (int n = startN; n < board.getFiles(); ++n) {
+                calculations++;
+                ChessPiece testPiece = ChessPiece.newFromSymbol(p.getSymbol(), m, n);
+                if (testBoard.putPiece(testPiece)) {
+                    if (pieces.isEmpty()) {
+                        testBoard.print(System.out);
+                        uniqueBoards++;
+                    } else {
+                        Queue<ChessPiece> remainingPieces = new ArrayDeque<>(pieces);
+                        listConfigurationsV2(testBoard, remainingPieces, p.getSymbol(), m, n);
+                    }
+                    testBoard = new ChessBoard(board);
+                }
+            }
+            startN = 0;
+        }
+        return configs;
+    }
+
     public static <T> List<T> rotate(List<T> aL) {
         if (aL.size() == 0)
             return aL;
@@ -152,14 +184,14 @@ public class ChessBoard {
     /**
      * Prints the board to the StdOut.
      */
-    public void printBoard() {
+    public void print(PrintStream ps) {
         for (String[] m : boardState) {
             for (String n : m) {
-                System.out.print(n == null || THREAT_MARKER.equals(n) ? EMPTY_MARKER : n);
+                ps.print(n == null || THREAT_MARKER.equals(n) ? EMPTY_MARKER : n);
             }
-            System.out.println();
+            ps.println();
         }
-        System.out.println();
+        ps.println();
     }
 
     public int getRanks() {
