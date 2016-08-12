@@ -1,6 +1,3 @@
-/**
- * 
- */
 package chess.challenge;
 
 import java.awt.Point;

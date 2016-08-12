@@ -16,13 +16,14 @@ public class Rock extends ChessPiece {
     public static final String SYMBOL = "R";
     private static final boolean LIMITED_RANGE = false;
 
-    @SuppressWarnings("serial")
-    private static final List<Point> validMoves = new ArrayList<Point>() {{
-        add(new Point(-1, 0));
-        add(new Point(0, 1));
-        add(new Point(1, 0));
-        add(new Point(0, -1));
-    }};
+    private static final List<Point> validMoves;
+    static {
+        validMoves = new ArrayList<>();
+        validMoves.add(new Point(-1, 0));
+        validMoves.add(new Point(0, 1));
+        validMoves.add(new Point(1, 0));
+        validMoves.add(new Point(0, -1));
+    }
 
     /**
      * Default constructor.
@@ -33,8 +34,10 @@ public class Rock extends ChessPiece {
 
     /** 
      * Constructor defining the initial position.
-     * @param position
-     * @param limitedRange
+     * @param rank
+     *            rank of the piece
+     * @param file
+     *            file of the piece
      */
     public Rock(int rank, int file) {
         super(rank, file, LIMITED_RANGE);

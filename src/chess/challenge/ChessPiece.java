@@ -1,4 +1,5 @@
 package chess.challenge;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,13 @@ public abstract class ChessPiece {
     private final boolean limitedRange;
 
     /**
-     * Protected constructor defining the initial piece position and whether 
-     * the piece has a limited range or not.
+     * Protected constructor defining the initial piece position and whether the
+     * piece has a limited range or not.
      * 
-     * @param position Initial piece position.
-     * @param limitedRange Sets if the piece has a limited range.
+     * @param position
+     *            Initial piece position.
+     * @param limitedRange
+     *            Sets if the piece has a limited range.
      */
     protected ChessPiece(int rank, int file, boolean limitedRange) {
         this.rank = rank;
@@ -30,6 +33,7 @@ public abstract class ChessPiece {
 
     /**
      * Returns whether the piece has a limited range or not.
+     * 
      * @return The value of limitedRage.
      */
     public boolean hasLimitedRange() {
@@ -38,10 +42,11 @@ public abstract class ChessPiece {
 
     /**
      * Returns the list of valid moves of the piece.
+     * 
      * @return List of valid moves.
      */
     public abstract List<Point> getValidMoves();
-    
+
     /**
      * Gets the symbol representing the piece.
      * 
@@ -52,70 +57,100 @@ public abstract class ChessPiece {
     /**
      * Returns a list of coordinates that the piece threatens.
      * 
-     * @param board the board where the threat area will be tested
+     * @param board
+     *            the board where the threat area will be tested
      * @return list of coordinates that the piece threatens.
      */
     public List<Point> threatArea(ChessBoard board) {
+        if (this.hasLimitedRange()) {
+            return threatAreaLimited(board);
+        }
+        return threatAreaUnlimited(board);
+    }
+
+    private List<Point> threatAreaLimited(ChessBoard board) {
         List<Point> threats = new ArrayList<>();
         Point p = new Point(this.rank, this.file);
 
-        if (this.hasLimitedRange()) {
-            for (Point p1 : this.getValidMoves()) {
-                int x1 = p.x + p1.x;
-                int y1 = p.y + p1.y;
-                if ((x1 >= 0 && x1 < board.getRanks())
-                        && (y1 >= 0 && y1 < board.getFiles())) {
-                    threats.add(new Point(x1, y1));
-                }
-            }
-        } else {
-            for (Point p1 : this.getValidMoves()) {
-                int x1 = p.x + p1.x;
-                int y1 = p.y + p1.y;
-                int distance = 1;
-                while ((x1 >= 0 && x1 < board.getRanks()) 
-                        && (y1 >= 0 && y1 < board.getFiles())) {
-                    threats.add(new Point(x1, y1));
-                    distance++;
-                    x1 = p.x + p1.x * distance;
-                    y1 = p.y + p1.y * distance;
-                }
+        for (Point p1 : this.getValidMoves()) {
+            int x1 = p.x + p1.x;
+            int y1 = p.y + p1.y;
+            if ((x1 >= 0 && x1 < board.getRanks()) && (y1 >= 0 && y1 < board.getFiles())) {
+                threats.add(new Point(x1, y1));
             }
         }
         return threats;
     }
 
+    private List<Point> threatAreaUnlimited(ChessBoard board) {
+        List<Point> threats = new ArrayList<>();
+        Point p = new Point(this.rank, this.file);
+
+        for (Point p1 : this.getValidMoves()) {
+            int x1 = p.x + p1.x;
+            int y1 = p.y + p1.y;
+            int distance = 1;
+            while ((x1 >= 0 && x1 < board.getRanks()) && (y1 >= 0 && y1 < board.getFiles())) {
+                threats.add(new Point(x1, y1));
+                distance++;
+                x1 = p.x + p1.x * distance;
+                y1 = p.y + p1.y * distance;
+            }
+        }
+        return threats;
+    }
+
+    /**
+     * Creates a new instance of the piece type identified by the symbol.
+     * 
+     * @param symbol
+     *            symbol of the piece to be created.
+     * @param rank
+     *            rank where the piece will be placed.
+     * @param file
+     *            file where the piece will be placed.
+     * @return a new instance of the piece.
+     */
     public static ChessPiece newFromSymbol(String symbol, int rank, int file) {
+        ChessPiece cp;
         switch (symbol) {
         case King.SYMBOL:
-            return new King(rank, file);
+            cp = new King(rank, file);
+            break;
         case Queen.SYMBOL:
-            return new Queen(rank, file);
+            cp = new Queen(rank, file);
+            break;
         case Rock.SYMBOL:
-            return new Rock(rank, file);
+            cp = new Rock(rank, file);
+            break;
         case Knight.SYMBOL:
-            return new Knight(rank, file);
+            cp = new Knight(rank, file);
+            break;
         case Bishop.SYMBOL:
-            return new Bishop(rank, file);
+            cp = new Bishop(rank, file);
+            break;
+        default:
+            return null;            
         }
-        return null;
+        return cp;
     }
 
     public int getRank() {
         return rank;
     }
-    
+
     public int getFile() {
         return file;
     }
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return this.getSymbol() + Character.toString((char)(97 + file)) +  String.valueOf(rank + Math.abs(rank - 8));
+        return this.getSymbol() + Character.toString((char) (97 + file)) + String.valueOf(rank + Math.abs(rank - 8));
     }
 
 }

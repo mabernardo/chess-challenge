@@ -16,18 +16,22 @@ public class Knight extends ChessPiece {
     public static final String SYMBOL = "N";
     private static final boolean LIMITED_RANGE = true;
 
-    @SuppressWarnings("serial")
-    private static final List<Point> validMoves = new ArrayList<Point>() {{
-        add(new Point(-2, 1));
-        add(new Point(-1, 2));
-        add(new Point(1, 2));
-        add(new Point(2, 1));
-        add(new Point(2, -1));
-        add(new Point(1, -2));
-        add(new Point(-1, -2));
-        add(new Point(-2, -1));
-    }};
+    private static final List<Point> validMoves;
+    static {
+        validMoves = new ArrayList<>();
+        validMoves.add(new Point(-2, 1));
+        validMoves.add(new Point(-1, 2));
+        validMoves.add(new Point(1, 2));
+        validMoves.add(new Point(2, 1));
+        validMoves.add(new Point(2, -1));
+        validMoves.add(new Point(1, -2));
+        validMoves.add(new Point(-1, -2));
+        validMoves.add(new Point(-2, -1));
+    }
 
+    /**
+     * Default constructor.
+     */
     public Knight() {
         super(0, 0, LIMITED_RANGE);
     }
@@ -35,8 +39,10 @@ public class Knight extends ChessPiece {
     /**
      * Constructor defining initial position.
      * 
-     * @param position
-     * @param LIMITED_RANGE
+     * @param rank
+     *            rank of the piece
+     * @param file
+     *            file of the piece
      */
     public Knight(int rank, int file) {
         super(rank, file, LIMITED_RANGE);

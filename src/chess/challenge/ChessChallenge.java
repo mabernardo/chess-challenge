@@ -27,30 +27,35 @@ public class ChessChallenge {
         Scanner scan = new Scanner(System.in);
         int ranks = scan.nextInt();
         int files = scan.nextInt();
-        int kings = scan.nextInt();
-        int queens = scan.nextInt();
-        int bishops = scan.nextInt();
-        int rocks = scan.nextInt();
-        int knights = scan.nextInt();
-        scan.close();
 
         ChessBoard board = new ChessBoard(ranks, files);
         Queue<ChessPiece> pieces = new ArrayDeque<>();
+
+        int kings = scan.nextInt();
         while (kings-- > 0) {
             pieces.add(new King());
         }
+
+        int queens = scan.nextInt();
         while (queens-- > 0) {
             pieces.add(new Queen());
         }
+
+        int bishops = scan.nextInt();
         while (bishops-- > 0) {
             pieces.add(new Bishop());
         }
+
+        int rocks = scan.nextInt();
         while (rocks-- > 0) {
             pieces.add(new Rock());
         }
+
+        int knights = scan.nextInt();
         while (knights-- > 0) {
             pieces.add(new Knight());
         }
+        scan.close();
 
         long startTime = System.currentTimeMillis();
         printConfigurations(board, pieces);
