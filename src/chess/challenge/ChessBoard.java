@@ -5,12 +5,8 @@ package chess.challenge;
 
 import java.awt.Point;
 import java.io.PrintStream;
-import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Queue;
-import java.util.Set;
 
 /**
  * Object representing a chess board with variable dimensions.
@@ -27,9 +23,6 @@ public class ChessBoard {
     private final int ranks;
     private final int files;
     private String[][] boardState;
-
-    public static int calculations = 0;
-    public static int uniqueBoards = 0;
 
     /**
      * Creates a board with dimensions ranks x files.
@@ -108,81 +101,8 @@ public class ChessBoard {
     }
 
     /**
-     * Calculates all possible configurations for which all of the pieces can be
-     * placed on board without threatening each other.
-     * 
-     * @param board
-     *            board with the dimensions needed for the calculation.
-     * @param pieces
-     *            pieces to be placed on the boards.
-     * @return Set of unique configurations.
-     */
-    public static Set<ChessBoard> listConfigurations(ChessBoard board, Queue<ChessPiece> pieces) {
-        ChessPiece p = pieces.poll();
-        ChessBoard testBoard = new ChessBoard(board);
-        Set<ChessBoard> configs = new LinkedHashSet<>();
-        for (int m = 0; m < board.getRanks(); ++m) {
-            for (int n = 0; n < board.getFiles(); ++n) {
-                calculations++;
-                ChessPiece testPiece = ChessPiece.newFromSymbol(p.getSymbol(), m, n);
-                if (testBoard.putPiece(testPiece)) {
-                    if (pieces.isEmpty()) {
-                        configs.add(testBoard);
-                    } else {
-                        Queue<ChessPiece> remainingPieces = new ArrayDeque<>(pieces);
-                        Set<ChessBoard> c = listConfigurations(testBoard, remainingPieces);
-                        configs.addAll(c);
-                    }
-                    testBoard = new ChessBoard(board);
-                }
-            }
-        }
-        return configs;
-    }
-
-    public static Set<ChessBoard> listConfigurationsV2(ChessBoard board, Queue<ChessPiece> pieces, String previous, int x, int y) {
-        ChessPiece p = pieces.poll();
-        ChessBoard testBoard = new ChessBoard(board);
-        Set<ChessBoard> configs = new LinkedHashSet<>();
-        int startM = 0;
-        int startN = 0;
-        if (p.getSymbol().equals(previous)) {
-            startM = x;
-            startN = y;
-        }
-        for (int m = startM; m < board.getRanks(); ++m) {
-            for (int n = startN; n < board.getFiles(); ++n) {
-                calculations++;
-                ChessPiece testPiece = ChessPiece.newFromSymbol(p.getSymbol(), m, n);
-                if (testBoard.putPiece(testPiece)) {
-                    if (pieces.isEmpty()) {
-                        testBoard.print(System.out);
-                        uniqueBoards++;
-                    } else {
-                        Queue<ChessPiece> remainingPieces = new ArrayDeque<>(pieces);
-                        listConfigurationsV2(testBoard, remainingPieces, p.getSymbol(), m, n);
-                    }
-                    testBoard = new ChessBoard(board);
-                }
-            }
-            startN = 0;
-        }
-        return configs;
-    }
-
-    public static <T> List<T> rotate(List<T> aL) {
-        if (aL.size() == 0)
-            return aL;
-
-        T element = null;
-        element = aL.remove(aL.size() - 1);
-        aL.add(0, element);
-
-        return aL;
-    }
-
-    /**
-     * Prints the board to the StdOut.
+     * Print out the board to the specified PrintStream.
+     * @param ps stream where is to be printed.
      */
     public void print(PrintStream ps) {
         for (String[] m : boardState) {
@@ -233,5 +153,4 @@ public class ChessBoard {
             return false;
         return true;
     }
-
 }

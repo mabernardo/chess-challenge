@@ -5,15 +5,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
-
-import org.junit.Before;
 import org.junit.Test;
 
 import chess.challenge.Bishop;
 import chess.challenge.ChessBoard;
-import chess.challenge.ChessPiece;
 import chess.challenge.King;
 import chess.challenge.Knight;
 import chess.challenge.Queen;
@@ -21,13 +16,6 @@ import chess.challenge.Rock;
 
 
 public class ChessBoardTest {
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void testChessBoard() {
@@ -137,39 +125,6 @@ public class ChessBoardTest {
         assertTrue(board.putPiece(new King(5, 1)));
         assertTrue(board.putPiece(new King(5, 3)));
         assertTrue(board.putPiece(new King(5, 5)));
-    }
-
-    @Test
-    public void testPrintConfigurations3x3x3() {
-        ChessBoard board = new ChessBoard(3, 3);
-        Queue<ChessPiece> pieces = new ArrayDeque<>();
-        pieces.add(new King());
-        pieces.add(new King());
-        pieces.add(new Rock());
-        
-        ChessBoard.calculations = 0;
-        ChessBoard.uniqueBoards = 0;
-        ChessBoard.listConfigurationsV2(board, pieces, null, 0, 0);
-        System.out.println(ChessBoard.uniqueBoards);
-        System.out.println(ChessBoard.calculations);
-    }
-
-    @Test
-    public void testPrintConfigurations4x4x6() {
-        ChessBoard board = new ChessBoard(4, 4);
-        Queue<ChessPiece> pieces = new ArrayDeque<>();
-        pieces.add(new Rock());
-        pieces.add(new Rock());
-        pieces.add(new Knight());
-        pieces.add(new Knight());
-        pieces.add(new Knight());
-        pieces.add(new Knight());
-
-        ChessBoard.calculations = 0;
-        ChessBoard.uniqueBoards = 0;
-        ChessBoard.listConfigurationsV2(board, pieces, null, 0, 0);
-        System.out.println(ChessBoard.uniqueBoards);
-        System.out.println(ChessBoard.calculations);
     }
 
     @Test
