@@ -1,5 +1,8 @@
 package chess.challenge;
 
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Scanner;
@@ -12,6 +15,14 @@ public class ChessChallenge {
     private static int calculations = 0;
     private static int uniqueBoards = 0;
 
+    private ChessChallenge() { }
+
+    /**
+     * Application entry point.
+     * 
+     * @param args
+     *            command line arguments
+     */
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         int ranks = scan.nextInt();
@@ -53,13 +64,21 @@ public class ChessChallenge {
     }
 
     /**
-     * Facade for the
+     * Facade for the other printConfigurations method. This method creates a
+     * buffered writer to the stdout, which is much more efficient then writing
+     * direct to it.
      * 
      * @param board
      * @param pieces
      */
     public static void printConfigurations(ChessBoard board, Queue<ChessPiece> pieces) {
-        printConfigurations(board, pieces, null, 0, 0);
+        try {
+            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+            printConfigurations(board, pieces, out, null, 0, 0);
+            out.flush();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 
     /**
@@ -72,8 +91,8 @@ public class ChessChallenge {
      *            pieces to be placed on the boards.
      * @return Set of unique configurations.
      */
-    private static void printConfigurations(ChessBoard board, Queue<ChessPiece> pieces, String previous, int startRank,
-            int startFile) {
+    private static void printConfigurations(ChessBoard board, Queue<ChessPiece> pieces, PrintWriter out,
+            String previous, int startRank, int startFile) {
         ChessPiece p = pieces.poll();
         ChessBoard testBoard = new ChessBoard(board);
         int startM = 0;
@@ -87,19 +106,19 @@ public class ChessChallenge {
             for (int n = startN; n < board.getFiles(); ++n) {
                 calculations++;
                 ChessPiece testPiece = ChessPiece.newFromSymbol(p.getSymbol(), m, n);
-                if (testBoard.putPiece(testPiece)) {
-                    if (pieces.isEmpty()) {
-                        testBoard.print(System.out);
-                        uniqueBoards++;
-                    } else {
-                        Queue<ChessPiece> remainingPieces = new ArrayDeque<>(pieces);
-                        printConfigurations(testBoard, remainingPieces, p.getSymbol(), m, n);
-                    }
-                    testBoard = new ChessBoard(board);
+                if (!testBoard.putPiece(testPiece)) {
+                    continue;
                 }
+                if (pieces.isEmpty()) {
+                    testBoard.print(out);
+                    uniqueBoards++;
+                } else {
+                    Queue<ChessPiece> remainingPieces = new ArrayDeque<>(pieces);
+                    printConfigurations(testBoard, remainingPieces, out, p.getSymbol(), m, n);
+                }
+                testBoard = new ChessBoard(board);
             }
             startN = 0;
         }
     }
-
 }

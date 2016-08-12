@@ -4,7 +4,7 @@
 package chess.challenge;
 
 import java.awt.Point;
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -102,16 +102,18 @@ public class ChessBoard {
 
     /**
      * Print out the board to the specified PrintStream.
-     * @param ps stream where is to be printed.
+     * 
+     * @param pw
+     *            writer where is to be printed.
      */
-    public void print(PrintStream ps) {
+    public void print(PrintWriter pw) {
         for (String[] m : boardState) {
             for (String n : m) {
-                ps.print(n == null || THREAT_MARKER.equals(n) ? EMPTY_MARKER : n);
+                pw.print(n == null || THREAT_MARKER.equals(n) ? EMPTY_MARKER : n);
             }
-            ps.println();
+            pw.println();
         }
-        ps.println();
+        pw.println();
     }
 
     public int getRanks() {
