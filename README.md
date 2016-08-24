@@ -6,7 +6,7 @@ Finds all unique configurations of a set of normal chess pieces on a chess board
 ## Building
 Clone the project and run:
 
-	./gradlew build copyJar
+	./gradlew build
 
 ## Usage
 
