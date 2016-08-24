@@ -143,14 +143,18 @@ public abstract class ChessPiece {
         return file;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
+    /**
+     * Prints out the piece coordinates in algebraic notation. 
      */
     @Override
     public String toString() {
-        return this.getSymbol() + Character.toString((char) (97 + file)) + String.valueOf(rank + Math.abs(rank - 8));
-    }
+        final int ASCII_CODE_A = 97;
+        final int STANDARD_BOARD_SIZE = 8;
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getSymbol());
+        sb.append(Character.toString((char) (ASCII_CODE_A + file)));
+        sb.append(String.valueOf(rank + Math.abs(rank - STANDARD_BOARD_SIZE)));
 
+        return sb.toString();
+    }
 }
