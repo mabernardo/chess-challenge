@@ -19,8 +19,3 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.+'
 }
-
-task copyJar(type: Copy) {
-    from jar
-    into '.'
-}

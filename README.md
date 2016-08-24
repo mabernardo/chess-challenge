@@ -10,7 +10,7 @@ Clone the project and run:
 
 ## Usage
 
-	java -jar chess-challenge.jar [-v]
+	java -jar build/libs/chess-challenge.jar [-v]
 
 ## Input
 The dimensions of the board: M, N
