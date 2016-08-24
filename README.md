@@ -4,7 +4,7 @@ Finds all unique configurations of a set of normal chess pieces on a chess board
 ## Building
 Clone the project and run:
 
-	./build.sh
+	./gradlew build copyJar
 
 ## Usage
 
