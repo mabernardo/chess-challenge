@@ -1,3 +1,5 @@
+https://travis-ci.org/mabernardo/chess-challenge.svg?branch=master
+
 # chess-challenge
 Finds all unique configurations of a set of normal chess pieces on a chess board with dimensions MxN where none of the pieces is in a position to take any of the others.
 
