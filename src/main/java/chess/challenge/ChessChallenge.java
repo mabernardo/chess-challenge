@@ -22,52 +22,58 @@ public class ChessChallenge {
      *            command line arguments
      */
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        int ranks = scan.nextInt();
-        int files = scan.nextInt();
+        Scanner scanner = new Scanner(System.in);
+        ChessBoard board = scanBoard(scanner);
+        Queue<ChessPiece> pieces = scanPieces(scanner);
 
-        ChessBoard board = new ChessBoard(ranks, files);
+        boolean summaryOnly = args.length > 0 && "-s".equals(args[0]);
+        if (summaryOnly) {
+            ChessBoard.ComputationSummary stats = board.computeUniqueBoardCombinations(pieces);
+
+            System.out.println(stats.getCalculations() + " calculations resulted in " + stats.getUniqueBoards()
+                + " unique combinations in " + (double) stats.getElapsedTime() / 1000.0 + " seconds.");
+
+        } else {
+            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+            board.printUniqueBoardCombinations(pieces, out);
+        }
+    }
+
+    private static ChessBoard scanBoard(Scanner scanner) {
+        int ranks = scanner.nextInt();
+        int files = scanner.nextInt();
+
+        return new ChessBoard(ranks, files);
+    }
+
+    private static Queue<ChessPiece> scanPieces(Scanner scanner) {
         Queue<ChessPiece> pieces = new ArrayDeque<>();
 
-        int kings = scan.nextInt();
+        int kings = scanner.nextInt();
         while (kings-- > 0) {
             pieces.add(new King());
         }
 
-        int queens = scan.nextInt();
+        int queens = scanner.nextInt();
         while (queens-- > 0) {
             pieces.add(new Queen());
         }
 
-        int bishops = scan.nextInt();
+        int bishops = scanner.nextInt();
         while (bishops-- > 0) {
             pieces.add(new Bishop());
         }
 
-        int rocks = scan.nextInt();
+        int rocks = scanner.nextInt();
         while (rocks-- > 0) {
             pieces.add(new Rock());
         }
 
-        int knights = scan.nextInt();
+        int knights = scanner.nextInt();
         while (knights-- > 0) {
             pieces.add(new Knight());
         }
-        scan.close();
 
-        ChessBoard.ComputationSummary stats;
-        boolean summaryOnly = (args.length > 0 && "-s".equals(args[0]));
-        if (summaryOnly) {
-            stats = board.computeUniqueBoardCombinations(pieces);
-        } else {
-            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
-            stats = board.printUniqueBoardCombinations(pieces, out);
-        }
-
-        if (summaryOnly) {
-            System.out.println(stats.getCalculations() + " calculations resulted in " + stats.getUniqueBoards()
-                    + " unique combinations in " + (double) stats.getElapsedTime() / 1000.0 + " seconds.");
-        }
+        return pieces;
     }
-
 }
