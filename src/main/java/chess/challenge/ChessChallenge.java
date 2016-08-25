@@ -12,10 +12,8 @@ import java.util.Scanner;
  */
 public class ChessChallenge {
 
-    private static int calculations = 0;
-    private static int uniqueBoards = 0;
-
-    private ChessChallenge() { }
+    private ChessChallenge() {
+    }
 
     /**
      * Application entry point.
@@ -57,73 +55,19 @@ public class ChessChallenge {
         }
         scan.close();
 
-        long startTime = System.currentTimeMillis();
-        printConfigurations(board, pieces);
-        long stopTime = System.currentTimeMillis();
-        long elapsedTime = stopTime - startTime;
-
-        if (args.length > 0 && "-v".equals(args[0])) {
-            System.out.println(calculations + " calculations resulted in " + uniqueBoards + " unique combinations in "
-                    + (double) elapsedTime / 1000.0 + " seconds.");
-        }
-    }
-
-    /**
-     * Facade for the other printConfigurations method. This method creates a
-     * buffered writer to the stdout, which is much more efficient then writing
-     * direct to it.
-     * 
-     * @param board
-     * @param pieces
-     */
-    public static void printConfigurations(ChessBoard board, Queue<ChessPiece> pieces) {
-        try {
+        ChessBoard.ComputationSummary stats;
+        boolean summaryOnly = (args.length > 0 && "-s".equals(args[0]));
+        if (summaryOnly) {
+            stats = board.computeUniqueBoardCombinations(pieces);
+        } else {
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
-            printConfigurations(board, pieces, out, null, 0, 0);
-            out.flush();
-        } catch (Exception e) {
-            System.err.println(e);
+            stats = board.printUniqueBoardCombinations(pieces, out);
+        }
+
+        if (summaryOnly) {
+            System.out.println(stats.getCalculations() + " calculations resulted in " + stats.getUniqueBoards()
+                    + " unique combinations in " + (double) stats.getElapsedTime() / 1000.0 + " seconds.");
         }
     }
 
-    /**
-     * Calculates all possible configurations for which all of the pieces can be
-     * placed on board without threatening each other.
-     * 
-     * @param board
-     *            board with the dimensions needed for the calculation.
-     * @param pieces
-     *            pieces to be placed on the boards.
-     * @return Set of unique configurations.
-     */
-    private static void printConfigurations(ChessBoard board, Queue<ChessPiece> pieces, PrintWriter out,
-            String previous, int startRank, int startFile) {
-        ChessPiece p = pieces.poll();
-        ChessBoard testBoard = new ChessBoard(board);
-        int startM = 0;
-        int startN = 0;
-
-        if (p.getSymbol().equals(previous)) {
-            startM = startRank;
-            startN = startFile;
-        }
-        for (int m = startM; m < board.getRanks(); ++m) {
-            for (int n = startN; n < board.getFiles(); ++n) {
-                calculations++;
-                ChessPiece testPiece = ChessPiece.newFromSymbol(p.getSymbol(), m, n);
-                if (!testBoard.putPiece(testPiece)) {
-                    continue;
-                }
-                if (pieces.isEmpty()) {
-                    testBoard.print(out);
-                    uniqueBoards++;
-                } else {
-                    Queue<ChessPiece> remainingPieces = new ArrayDeque<>(pieces);
-                    printConfigurations(testBoard, remainingPieces, out, p.getSymbol(), m, n);
-                }
-                testBoard = new ChessBoard(board);
-            }
-            startN = 0;
-        }
-    }
 }

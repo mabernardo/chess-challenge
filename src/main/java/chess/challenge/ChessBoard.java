@@ -2,8 +2,11 @@ package chess.challenge;
 
 import java.awt.Point;
 import java.io.PrintWriter;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Object representing a chess board with variable dimensions.
@@ -20,6 +23,9 @@ public class ChessBoard {
     private final int ranks;
     private final int files;
     private String[][] boardState;
+
+    private static int calculations = 0;
+    private static int uniqueBoards = 0;
 
     /**
      * Creates a board with dimensions ranks x files.
@@ -98,12 +104,169 @@ public class ChessBoard {
     }
 
     /**
+     * Static nested class with the results of the computation of unique board
+     * combinations. Contains data about the processing time, number of
+     * iterations and number of unique boards found during the process.
+     */
+    static class ComputationSummary {
+        private final long startTime;
+        private long endTime;
+        private long elapsedTime;
+        private long calculations;
+        private long uniqueBoards;
+
+        private ComputationSummary() {
+            startTime = System.nanoTime();
+        }
+
+        /**
+         * Creates a new instance of this class initializing the starting time
+         * of computation.
+         * 
+         * @return a new ComputationSummary instance
+         */
+        public static ComputationSummary start() {
+            return new ComputationSummary();
+        }
+
+        /**
+         * Marks the end time of computation and calculates the elapsed time.
+         */
+        public void stop() {
+            endTime = System.nanoTime();
+            elapsedTime = TimeUnit.MILLISECONDS.convert(endTime - startTime, TimeUnit.NANOSECONDS);
+        }
+
+        public long getStartTime() {
+            return startTime;
+        }
+
+        public long getEndTime() {
+            return endTime;
+        }
+
+        public long getElapsedTime() {
+            return elapsedTime;
+        }
+
+        public long getCalculations() {
+            return calculations;
+        }
+
+        public long getUniqueBoards() {
+            return uniqueBoards;
+        }
+    }
+
+    /**
+     * Facade for the main board computation method receiving a printer to where
+     * the results are to be printed.
+     * 
+     * @param pieces
+     *            Pieces to be added to the boards
+     * @param out
+     *            PrinterWriter where the results will br printed.
+     * @return ComputationSummary with duration, iterations and number of unique
+     *         boards found.
+     */
+    public ComputationSummary printUniqueBoardCombinations(Queue<ChessPiece> pieces, PrintWriter out) {
+        ComputationSummary s = executeBoardsComputation(pieces, out);
+        out.flush();
+        return s;
+    }
+
+    /**
+     * Facade for the main board computation method. This method passes
+     * a null writer to the executor method, so nothing will be printed.
+     * 
+     * @param pieces
+     *            Pieces to be added to the boards
+     * @return ComputationSummary with duration, iterations and number of unique
+     *         boards found.
+     */
+    public ComputationSummary computeUniqueBoardCombinations(Queue<ChessPiece> pieces) {
+        return executeBoardsComputation(pieces, null);
+    }
+
+    /**
+     * Fires the execution of the board computation method and filling out the
+     * ComputationSummary.
+     * 
+     * @param pieces
+     *            Pieces to be added to the boards
+     * @param out
+     *            PrinterWriter where the results will br printed.
+     * @return ComputationSummary
+     */
+    private ComputationSummary executeBoardsComputation(Queue<ChessPiece> pieces, PrintWriter out) {
+        resetCounters();
+        ComputationSummary stats = ComputationSummary.start();
+        printUniqueBoardCombinations(this, pieces, out, null, 0, 0);
+        stats.stop();
+        stats.calculations = calculations;
+        stats.uniqueBoards = uniqueBoards;
+
+        return stats;
+    }
+
+    private static void resetCounters() {
+        calculations = 0;
+        uniqueBoards = 0;
+    }
+
+    /**
+     * Calculates all possible configurations for which all of the pieces can be
+     * placed on board without threatening each other.
+     * This method is not thread safe.
+     * 
+     * @param board
+     *            board with the dimensions needed for the calculation.
+     * @param pieces
+     *            pieces to be placed on the boards.
+     * @return Set of unique configurations.
+     */
+    private static void printUniqueBoardCombinations(ChessBoard board, Queue<ChessPiece> pieces, PrintWriter out,
+            String previousPiece, int previousRank, int previousFile) {
+        ChessPiece p = pieces.poll();
+        ChessBoard testBoard = new ChessBoard(board);
+        int startRank = 0;
+        int startFile = 0;
+
+        if (p.getSymbol().equals(previousPiece)) {
+            startRank = previousRank;
+            startFile = previousFile;
+        }
+        for (int rank = startRank; rank < board.getRanks(); ++rank) {
+            for (int file = startFile; file < board.getFiles(); ++file) {
+                calculations++;
+                ChessPiece testPiece = ChessPiece.newFromSymbol(p.getSymbol(), rank, file);
+                if (!testBoard.putPiece(testPiece)) {
+                    continue;
+                }
+                if (pieces.isEmpty()) {
+                    testBoard.print(out);
+                    uniqueBoards++;
+                } else {
+                    Queue<ChessPiece> remainingPieces = new ArrayDeque<>(pieces);
+                    printUniqueBoardCombinations(testBoard, remainingPieces, out, p.getSymbol(), rank, file);
+                }
+                testBoard = new ChessBoard(board);
+            }
+            startFile = 0;
+        }
+    }
+
+    /**
      * Print out the board to the specified PrintStream.
      * 
      * @param pw
      *            writer where is to be printed.
      */
     public void print(PrintWriter pw) {
+        if (pw == null) {
+            return;
+        }
+
         for (String[] m : boardState) {
             for (String n : m) {
                 pw.print(n == null || THREAT_MARKER.equals(n) ? EMPTY_MARKER : n);

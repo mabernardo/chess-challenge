@@ -5,6 +5,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 import org.junit.Test;
 
 import chess.challenge.Bishop;
@@ -143,5 +151,51 @@ public class ChessBoardTest {
         board1 = new ChessBoard(3, 3);
         board2 = new ChessBoard(2, 2);
         assertNotEquals(board1, board2);
+    }
+
+    @Test
+    public void testPrintUniqueBoardCombinations() {
+        String result = "R....N.N..R..N.N"
+                      + ".R..N.N....RN.N."
+                      + "..R..N.NR....N.N"
+                      + "...RN.N..R..N.N."
+                      + ".N.NR....N.N..R."
+                      + "N.N..R..N.N....R"
+                      + ".N.N..R..N.NR..."
+                      + "N.N....RN.N..R..";
+
+        ChessBoard board = new ChessBoard(4, 4);
+        Queue<ChessPiece> pieces = new ArrayDeque<>();
+
+        pieces.add(new Rock());
+        pieces.add(new Rock());
+        pieces.add(new Knight());
+        pieces.add(new Knight());
+        pieces.add(new Knight());
+        pieces.add(new Knight());
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(out);
+        PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(ps)));
+
+        ChessBoard.ComputationSummary s = board.printUniqueBoardCombinations(pieces, pw);
+        assertTrue(result.equals(out.toString().replaceAll("\n", "").replaceAll("\r", "")));
+        assertEquals(8, s.getUniqueBoards());
+    }
+
+    @Test
+    public void testComputeUniqueBoardCombinations() {
+        ChessBoard board = new ChessBoard(4, 4);
+        Queue<ChessPiece> pieces = new ArrayDeque<>();
+
+        pieces.add(new Rock());
+        pieces.add(new Rock());
+        pieces.add(new Knight());
+        pieces.add(new Knight());
+        pieces.add(new Knight());
+        pieces.add(new Knight());
+
+        ChessBoard.ComputationSummary s = board.computeUniqueBoardCombinations(pieces);
+        assertEquals(8, s.getUniqueBoards());
     }
 }
