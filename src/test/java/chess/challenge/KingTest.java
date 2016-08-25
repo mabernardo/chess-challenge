@@ -26,7 +26,8 @@ public class KingTest {
         assertEquals(0, king.getRank());
         assertEquals(1, king.getFile());
         assertTrue(king.hasLimitedRange());
-        assertTrue("K".equals(king.getSymbol()));
+        assertEquals(PieceType.KING, king.getType());
+        assertTrue("K".equals(king.getType().symbol()));
         assertTrue("Kb8".equals(king.toString()));
     }
     

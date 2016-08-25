@@ -13,7 +13,6 @@ import java.util.List;
  */
 public class Rock extends ChessPiece {
 
-    public static final String SYMBOL = "R";
     private static final boolean LIMITED_RANGE = false;
 
     private static final List<Point> validMoves;
@@ -52,7 +51,7 @@ public class Rock extends ChessPiece {
     }
 
     @Override
-    public String getSymbol() {
-        return SYMBOL;
+    public PieceType getType() {
+        return PieceType.ROCK;
     }
 }

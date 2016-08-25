@@ -12,7 +12,6 @@ import java.util.List;
  */
 public final class King extends ChessPiece {
 
-    public static final String SYMBOL = "K";
     private static final boolean LIMITED_RANGE = true;
 
     private static final List<Point> validMoves;
@@ -61,7 +60,7 @@ public final class King extends ChessPiece {
      * @see chess.challenge.ChessPiece#getSymbol()
      */
     @Override
-    public String getSymbol() {
-        return SYMBOL;
+    public PieceType getType() {
+        return PieceType.KING;
     }
 }

@@ -17,12 +17,12 @@ import java.util.concurrent.TimeUnit;
  */
 public class ChessBoard {
 
-    private static final String THREAT_MARKER = "X";
-    private static final String EMPTY_MARKER = ".";
+    private static final int THREAT_MARKER = -1;
+    private static final int EMPTY_MARKER = 0;
 
     private final int ranks;
     private final int files;
-    private String[][] boardState;
+    private int[][] boardState;
 
     private static int calculations = 0;
     private static int uniqueBoards = 0;
@@ -38,7 +38,7 @@ public class ChessBoard {
     public ChessBoard(int ranks, int files) {
         this.ranks = ranks;
         this.files = files;
-        boardState = new String[ranks][files];
+        boardState = new int[ranks][files];
     }
 
     /**
@@ -50,9 +50,9 @@ public class ChessBoard {
     public ChessBoard(ChessBoard board) {
         this.ranks = board.ranks;
         this.files = board.files;
-        boardState = new String[ranks][files];
+        boardState = new int[ranks][files];
 
-        String[][] state = board.getBoardState();
+        int[][] state = board.getBoardState();
         for (int m = 0; m < state.length; m++) {
             for (int n = 0; n < state[0].length; n++) {
                 boardState[m][n] = state[m][n];
@@ -75,18 +75,18 @@ public class ChessBoard {
      */
     public boolean putPiece(ChessPiece piece) {
         Point p = new Point(piece.getRank(), piece.getFile());
-        if (boardState[p.x][p.y] != null) {
+        if (boardState[p.x][p.y] != EMPTY_MARKER) {
             return false;
         }
 
         List<Point> threatList = piece.threatArea(this);
         for (Point tp : threatList) {
-            String cell = boardState[tp.x][tp.y];
-            if (cell != null && !THREAT_MARKER.equals(cell)) {
+            int cell = boardState[tp.x][tp.y];
+            if (cell != EMPTY_MARKER && cell != THREAT_MARKER) {
                 return false;
             }
         }
-        boardState[p.x][p.y] = new String(piece.getSymbol());
+        boardState[p.x][p.y] = piece.getType().code();
         markThreatArea(threatList);
 
         return true;
@@ -99,7 +99,7 @@ public class ChessBoard {
      */
     private void markThreatArea(List<Point> threatList) {
         for (Point tp : threatList) {
-            boardState[tp.x][tp.y] = new String(THREAT_MARKER);
+            boardState[tp.x][tp.y] = THREAT_MARKER;
         }
     }
 
@@ -226,20 +226,20 @@ public class ChessBoard {
      * @return Set of unique configurations.
      */
     private static void printUniqueBoardCombinations(ChessBoard board, Queue<ChessPiece> pieces, PrintWriter out,
-            String previousPiece, int previousRank, int previousFile) {
+            PieceType previousPieceType, int previousRank, int previousFile) {
         ChessPiece p = pieces.poll();
         ChessBoard testBoard = new ChessBoard(board);
         int startRank = 0;
         int startFile = 0;
 
-        if (p.getSymbol().equals(previousPiece)) {
+        if (p.getType() == previousPieceType) {
             startRank = previousRank;
             startFile = previousFile;
         }
         for (int rank = startRank; rank < board.getRanks(); ++rank) {
             for (int file = startFile; file < board.getFiles(); ++file) {
                 calculations++;
-                ChessPiece testPiece = ChessPiece.newFromSymbol(p.getSymbol(), rank, file);
+                ChessPiece testPiece = ChessPiece.newFromType(p.getType(), rank, file);
                 if (!testBoard.putPiece(testPiece)) {
                     continue;
                 }
@@ -248,7 +248,7 @@ public class ChessBoard {
                     uniqueBoards++;
                 } else {
                     Queue<ChessPiece> remainingPieces = new ArrayDeque<>(pieces);
-                    printUniqueBoardCombinations(testBoard, remainingPieces, out, p.getSymbol(), rank, file);
+                    printUniqueBoardCombinations(testBoard, remainingPieces, out, p.getType(), rank, file);
                 }
                 testBoard = new ChessBoard(board);
             }
@@ -267,9 +267,13 @@ public class ChessBoard {
             return;
         }
 
-        for (String[] m : boardState) {
-            for (String n : m) {
-                pw.print(n == null || THREAT_MARKER.equals(n) ? EMPTY_MARKER : n);
+        for (int[] rank : boardState) {
+            for (int cell : rank) {
+                if (cell == EMPTY_MARKER || cell == THREAT_MARKER) {
+                    pw.print(".");
+                } else {
+                    pw.print(PieceType.get(cell).symbol());
+                }
             }
             pw.println();
         }
@@ -284,7 +288,7 @@ public class ChessBoard {
         return files;
     }
 
-    public String[][] getBoardState() {
+    public int[][] getBoardState() {
         return boardState;
     }
 

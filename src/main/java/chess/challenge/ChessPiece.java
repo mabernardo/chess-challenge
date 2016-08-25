@@ -52,7 +52,7 @@ public abstract class ChessPiece {
      * 
      * @return symbol representing the piece.
      */
-    public abstract String getSymbol();
+    public abstract PieceType getType();
 
     /**
      * Returns a list of coordinates that the piece threatens.
@@ -101,9 +101,9 @@ public abstract class ChessPiece {
     }
 
     /**
-     * Creates a new instance of the piece type identified by the symbol.
+     * Creates a new instance of the specified piece type.
      * 
-     * @param symbol
+     * @param type
      *            symbol of the piece to be created.
      * @param rank
      *            rank where the piece will be placed.
@@ -111,26 +111,26 @@ public abstract class ChessPiece {
      *            file where the piece will be placed.
      * @return a new instance of the piece.
      */
-    public static ChessPiece newFromSymbol(String symbol, int rank, int file) {
+    public static ChessPiece newFromType(PieceType type, int rank, int file) {
         ChessPiece cp;
-        switch (symbol) {
-        case King.SYMBOL:
+        switch (type) {
+        case KING:
             cp = new King(rank, file);
             break;
-        case Queen.SYMBOL:
+        case QUEEN:
             cp = new Queen(rank, file);
             break;
-        case Rock.SYMBOL:
+        case ROCK:
             cp = new Rock(rank, file);
             break;
-        case Knight.SYMBOL:
+        case KNIGHT:
             cp = new Knight(rank, file);
             break;
-        case Bishop.SYMBOL:
+        case BISHOP:
             cp = new Bishop(rank, file);
             break;
         default:
-            return null;            
+            return null;
         }
         return cp;
     }
@@ -148,12 +148,12 @@ public abstract class ChessPiece {
      */
     @Override
     public String toString() {
-        final int ASCII_CODE_A = 97;
-        final int STANDARD_BOARD_SIZE = 8;
+        final int asciiCodeA = 97;
+        final int standardBoardSize = 8;
         StringBuilder sb = new StringBuilder();
-        sb.append(this.getSymbol());
-        sb.append(Character.toString((char) (ASCII_CODE_A + file)));
-        sb.append(String.valueOf(rank + Math.abs(rank - STANDARD_BOARD_SIZE)));
+        sb.append(this.getType().symbol());
+        sb.append(Character.toString((char) (asciiCodeA + file)));
+        sb.append(String.valueOf(rank + Math.abs(rank - standardBoardSize)));
 
         return sb.toString();
     }

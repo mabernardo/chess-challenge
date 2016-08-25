@@ -27,7 +27,8 @@ public class QueenTest {
         assertEquals(0, queen.getRank());
         assertEquals(1, queen.getFile());
         assertFalse(queen.hasLimitedRange());
-        assertTrue("Q".equals(queen.getSymbol()));
+        assertEquals(PieceType.QUEEN, queen.getType());
+        assertTrue("Q".equals(queen.getType().symbol()));
         assertTrue("Qb8".equals(queen.toString()));
     }
 

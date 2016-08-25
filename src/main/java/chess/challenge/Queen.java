@@ -13,7 +13,6 @@ import java.util.List;
  */
 public class Queen extends ChessPiece {
 
-    public static final String SYMBOL = "Q";
     private static final boolean LIMITED_RANGE = false;
 
     private static final List<Point> validMoves;
@@ -61,7 +60,7 @@ public class Queen extends ChessPiece {
      * @see chess.challenge.ChessPiece#getSymbol()
      */
     @Override
-    public String getSymbol() {
-        return SYMBOL;
+    public PieceType getType() {
+        return PieceType.QUEEN;
     }
 }

@@ -45,33 +45,34 @@ public class ChessBoardTest {
 
     @Test
     public void testChessBoardCopy() {
+        final int threatMarker = -1;
         ChessBoard board = new ChessBoard(3, 3);
 
         assertTrue(board.putPiece(new King(0, 0)));
         assertTrue(board.putPiece(new King(2, 2)));
 
-        assertTrue("K".equals(board.getBoardState()[0][0]));
-        assertTrue("K".equals(board.getBoardState()[2][2]));
+        assertEquals(PieceType.KING, PieceType.get(board.getBoardState()[0][0]));
+        assertEquals(PieceType.KING, PieceType.get(board.getBoardState()[2][2]));
 
-        assertTrue("X".equals(board.getBoardState()[0][1]));
-        assertTrue("X".equals(board.getBoardState()[1][0]));
-        assertTrue("X".equals(board.getBoardState()[1][1]));
+        assertEquals(threatMarker, board.getBoardState()[0][1]);
+        assertEquals(threatMarker, board.getBoardState()[1][0]);
+        assertEquals(threatMarker, board.getBoardState()[1][1]);
 
-        assertTrue("X".equals(board.getBoardState()[2][1]));
-        assertTrue("X".equals(board.getBoardState()[1][2]));
-        assertTrue("X".equals(board.getBoardState()[1][1]));
+        assertEquals(threatMarker, board.getBoardState()[2][1]);
+        assertEquals(threatMarker, board.getBoardState()[1][2]);
+        assertEquals(threatMarker, board.getBoardState()[1][1]);
 
         ChessBoard copy = new ChessBoard(board);
-        assertTrue("K".equals(copy.getBoardState()[0][0]));
-        assertTrue("K".equals(copy.getBoardState()[2][2]));
+        assertEquals(PieceType.KING, PieceType.get(copy.getBoardState()[0][0]));
+        assertEquals(PieceType.KING, PieceType.get(copy.getBoardState()[2][2]));
 
-        assertTrue("X".equals(copy.getBoardState()[0][1]));
-        assertTrue("X".equals(copy.getBoardState()[1][0]));
-        assertTrue("X".equals(copy.getBoardState()[1][1]));
+        assertEquals(threatMarker, copy.getBoardState()[0][1]);
+        assertEquals(threatMarker, copy.getBoardState()[1][0]);
+        assertEquals(threatMarker, copy.getBoardState()[1][1]);
 
-        assertTrue("X".equals(copy.getBoardState()[2][1]));
-        assertTrue("X".equals(copy.getBoardState()[1][2]));
-        assertTrue("X".equals(copy.getBoardState()[1][1]));
+        assertEquals(threatMarker, copy.getBoardState()[2][1]);
+        assertEquals(threatMarker, copy.getBoardState()[1][2]);
+        assertEquals(threatMarker, copy.getBoardState()[1][1]);
     }
 
     @Test
@@ -106,7 +107,7 @@ public class ChessBoardTest {
     public void testPutPiece() {
         ChessBoard board = new ChessBoard(7, 7);
 
-        assertTrue(board.putPiece(new King(3, 3)) && "K".equals(board.getBoardState()[3][3]));
+        assertTrue(board.putPiece(new King(3, 3)) && PieceType.KING.code() == board.getBoardState()[3][3]);
         assertFalse(board.putPiece(new Queen(0, 0)));
         assertFalse(board.putPiece(new Queen(0, 6)));
         assertFalse(board.putPiece(new Queen(6, 0)));
@@ -116,14 +117,14 @@ public class ChessBoardTest {
         assertFalse(board.putPiece(new Queen(6, 3)));
         assertFalse(board.putPiece(new Queen(3, 0)));
 
-        assertTrue(board.getBoardState()[0][0] == null);
-        assertTrue(board.getBoardState()[0][6] == null);
-        assertTrue(board.getBoardState()[6][0] == null);
-        assertTrue(board.getBoardState()[6][6] == null);
-        assertTrue(board.getBoardState()[0][3] == null);
-        assertTrue(board.getBoardState()[3][6] == null);
-        assertTrue(board.getBoardState()[6][3] == null);
-        assertTrue(board.getBoardState()[3][0] == null);
+        assertTrue(board.getBoardState()[0][0] == 0);
+        assertTrue(board.getBoardState()[0][6] == 0);
+        assertTrue(board.getBoardState()[6][0] == 0);
+        assertTrue(board.getBoardState()[6][6] == 0);
+        assertTrue(board.getBoardState()[0][3] == 0);
+        assertTrue(board.getBoardState()[3][6] == 0);
+        assertTrue(board.getBoardState()[6][3] == 0);
+        assertTrue(board.getBoardState()[3][0] == 0);
 
         assertTrue(board.putPiece(new King(1, 1)));
         assertTrue(board.putPiece(new King(1, 3)));

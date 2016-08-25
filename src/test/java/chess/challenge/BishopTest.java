@@ -27,7 +27,8 @@ public class BishopTest {
         assertEquals(0, bishop.getRank());
         assertEquals(1, bishop.getFile());
         assertFalse(bishop.hasLimitedRange());
-        assertTrue("B".equals(bishop.getSymbol()));
+        assertEquals(PieceType.BISHOP, bishop.getType());
+        assertTrue("B".equals(bishop.getType().symbol()));
         assertTrue("Bb8".equals(bishop.toString()));
     }
     

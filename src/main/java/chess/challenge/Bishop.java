@@ -13,7 +13,6 @@ import java.util.List;
  */
 public class Bishop extends ChessPiece {
 
-    public static final String SYMBOL = "B";
     private static final boolean LIMITED_RANGE = false;
 
     private static final List<Point> validMoves;
@@ -60,8 +59,8 @@ public class Bishop extends ChessPiece {
      * @see chess.challenge.ChessPiece#getSymbol()
      */
     @Override
-    public String getSymbol() {
-        return SYMBOL;
+    public PieceType getType() {
+        return PieceType.BISHOP;
     }
 
 }
