@@ -10,8 +10,12 @@ Clone the project and run:
 
 ## Usage
 
-	java -jar build/libs/chess-challenge.jar [-v]
+	java -jar build/libs/chess-challenge.jar [-v | -s]
 
+    optional arguments:
+	  -v    Prints a computation summary in the end.
+	  -s    Only prints the computation summary (no board output).
+  
 ## Input
 The dimensions of the board: M, N
 The number of pieces of each type (King, Queen, Bishop, Rook and Knight) to try and place on the board.
