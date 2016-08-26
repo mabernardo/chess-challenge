@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 
+import chess.challenge.piece.ChessPiece;
+import chess.challenge.piece.PieceType;
+
 /**
  * Object representing a chess board with variable dimensions.
  * 

@@ -1,4 +1,4 @@
-package chess.challenge;
+package chess.challenge.piece;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -8,6 +8,11 @@ import java.awt.Point;
 import java.util.List;
 
 import org.junit.Test;
+
+import chess.challenge.ChessBoard;
+import chess.challenge.piece.King;
+import chess.challenge.piece.PieceType;
+import chess.challenge.piece.bahaviour.LimitedThreat;
 
 public class KingTest {
 

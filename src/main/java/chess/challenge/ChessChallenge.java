@@ -7,6 +7,13 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Scanner;
 
+import chess.challenge.piece.Bishop;
+import chess.challenge.piece.ChessPiece;
+import chess.challenge.piece.King;
+import chess.challenge.piece.Knight;
+import chess.challenge.piece.Queen;
+import chess.challenge.piece.Rock;
+
 /**
  * @author mabernardo
  */

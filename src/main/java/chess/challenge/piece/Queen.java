@@ -1,42 +1,49 @@
-package chess.challenge;
+package chess.challenge.piece;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import chess.challenge.piece.bahaviour.UnlimitedThreat;
+
 /**
- * Rock chess piece implementation.
+ * Queen chess piece implementation.
  * 
  * @author mabernardo
  * @version 1.0
  * @since 1.0
  */
-public class Rock extends ChessPiece implements UnlimitedThreat {
+public class Queen extends ChessPiece implements UnlimitedThreat {
 
     private static final List<Point> validMoves;
     static {
         validMoves = new ArrayList<>();
+        validMoves.add(new Point(-1, -1));
         validMoves.add(new Point(-1, 0));
-        validMoves.add(new Point(0, 1));
-        validMoves.add(new Point(1, 0));
+        validMoves.add(new Point(-1, 1));
         validMoves.add(new Point(0, -1));
+        validMoves.add(new Point(0, 1));
+        validMoves.add(new Point(1, -1));
+        validMoves.add(new Point(1, 0));
+        validMoves.add(new Point(1, 1));
     }
 
     /**
      * Default constructor.
      */
-    public Rock() {
+    public Queen() {
         super(0, 0);
     }
 
-    /** 
-     * Constructor defining the initial position.
+    /**
+     * Constructor defining initial position.
+     * 
      * @param rank
      *            rank of the piece
      * @param file
      *            file of the piece
      */
-    public Rock(int rank, int file) {
+    public Queen(int rank, int file) {
         super(rank, file);
     }
 
@@ -48,8 +55,12 @@ public class Rock extends ChessPiece implements UnlimitedThreat {
         return validMoves;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see chess.challenge.ChessPiece#getSymbol()
+     */
     @Override
     public PieceType getType() {
-        return PieceType.ROCK;
+        return PieceType.QUEEN;
     }
 }

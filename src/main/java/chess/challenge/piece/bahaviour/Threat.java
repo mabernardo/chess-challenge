@@ -1,7 +1,9 @@
-package chess.challenge;
+package chess.challenge.piece.bahaviour;
 
 import java.awt.Point;
 import java.util.List;
+
+import chess.challenge.ChessBoard;
 
 /**
  * Base interface of a Threat behaviour.

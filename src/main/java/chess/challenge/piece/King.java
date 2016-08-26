@@ -1,7 +1,9 @@
-package chess.challenge;
+package chess.challenge.piece;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+
+import chess.challenge.piece.bahaviour.LimitedThreat;
 
 /**
  * King chess piece implementation.

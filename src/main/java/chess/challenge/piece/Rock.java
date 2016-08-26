@@ -1,49 +1,48 @@
-package chess.challenge;
+package chess.challenge.piece;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import chess.challenge.piece.bahaviour.UnlimitedThreat;
+
 /**
- * Bishop chess piece implementation.
+ * Rock chess piece implementation.
  * 
  * @author mabernardo
  * @version 1.0
  * @since 1.0
  */
-public class Bishop extends ChessPiece implements UnlimitedThreat {
+public class Rock extends ChessPiece implements UnlimitedThreat {
 
     private static final List<Point> validMoves;
     static {
         validMoves = new ArrayList<>();
-        validMoves.add(new Point(-1, 1));
-        validMoves.add(new Point(1, 1));
-        validMoves.add(new Point(1, -1));
-        validMoves.add(new Point(-1, -1));
+        validMoves.add(new Point(-1, 0));
+        validMoves.add(new Point(0, 1));
+        validMoves.add(new Point(1, 0));
+        validMoves.add(new Point(0, -1));
     }
 
     /**
      * Default constructor.
      */
-    public Bishop() {
+    public Rock() {
         super(0, 0);
     }
 
-    /**
-     * Constructor defining initial position.
-     * 
+    /** 
+     * Constructor defining the initial position.
      * @param rank
      *            rank of the piece
      * @param file
      *            file of the piece
      */
-    public Bishop(int rank, int file) {
+    public Rock(int rank, int file) {
         super(rank, file);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
+    /* (non-Javadoc)
      * @see chess.challenge.ChessPiece#getValidMoves()
      */
     @Override
@@ -51,14 +50,8 @@ public class Bishop extends ChessPiece implements UnlimitedThreat {
         return validMoves;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see chess.challenge.ChessPiece#getSymbol()
-     */
     @Override
     public PieceType getType() {
-        return PieceType.BISHOP;
+        return PieceType.ROCK;
     }
-
 }

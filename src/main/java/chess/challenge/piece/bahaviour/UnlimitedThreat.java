@@ -1,8 +1,10 @@
-package chess.challenge;
+package chess.challenge.piece.bahaviour;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+
+import chess.challenge.ChessBoard;
 
 /**
  * Interface defining the default behaviour of piece with unlimited threat area.

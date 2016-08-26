@@ -15,12 +15,14 @@ import java.util.Queue;
 
 import org.junit.Test;
 
-import chess.challenge.Bishop;
 import chess.challenge.ChessBoard;
-import chess.challenge.King;
-import chess.challenge.Knight;
-import chess.challenge.Queen;
-import chess.challenge.Rock;
+import chess.challenge.piece.Bishop;
+import chess.challenge.piece.ChessPiece;
+import chess.challenge.piece.King;
+import chess.challenge.piece.Knight;
+import chess.challenge.piece.PieceType;
+import chess.challenge.piece.Queen;
+import chess.challenge.piece.Rock;
 
 
 public class ChessBoardTest {

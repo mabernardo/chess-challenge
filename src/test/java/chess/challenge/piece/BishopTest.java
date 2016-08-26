@@ -1,4 +1,4 @@
-package chess.challenge;
+package chess.challenge.piece;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,8 +10,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import chess.challenge.Bishop;
 import chess.challenge.ChessBoard;
+import chess.challenge.piece.Bishop;
+import chess.challenge.piece.PieceType;
+import chess.challenge.piece.bahaviour.UnlimitedThreat;
 
 public class BishopTest {
 

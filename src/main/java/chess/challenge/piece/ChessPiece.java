@@ -1,4 +1,6 @@
-package chess.challenge;
+package chess.challenge.piece;
+
+import chess.challenge.piece.bahaviour.Threat;
 
 /**
  * Abstract representation of a chess piece.

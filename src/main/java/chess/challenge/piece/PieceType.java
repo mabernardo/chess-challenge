@@ -1,4 +1,4 @@
-package chess.challenge;
+package chess.challenge.piece;
 
 import java.util.EnumSet;
 import java.util.HashMap;
