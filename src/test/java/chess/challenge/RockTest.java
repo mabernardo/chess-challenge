@@ -27,7 +27,7 @@ public class RockTest {
         Rock rock = new Rock(0, 1);
         assertEquals(0, rock.getRank());
         assertEquals(1, rock.getFile());
-        assertFalse(rock.hasLimitedRange());
+        assertTrue(rock instanceof UnlimitedThreat);
         assertEquals(PieceType.ROCK, rock.getType());
         assertTrue("R".equals(rock.getType().symbol()));
         assertTrue("Rb8".equals(rock.toString()));

@@ -10,9 +10,7 @@ import java.util.List;
  * @version 1.0
  * @since 1.0
  */
-public final class King extends ChessPiece {
-
-    private static final boolean LIMITED_RANGE = true;
+public final class King extends ChessPiece implements LimitedThreat {
 
     private static final List<Point> validMoves;
     static {
@@ -31,7 +29,7 @@ public final class King extends ChessPiece {
      * Default constructor.
      */
     public King() {
-        super(0, 0, LIMITED_RANGE);
+        super(0, 0);
     }
 
     /**
@@ -43,7 +41,7 @@ public final class King extends ChessPiece {
      *            file of the piece
      */
     public King(int rank, int file) {
-        super(rank, file, LIMITED_RANGE);
+        super(rank, file);
     }
 
     /*

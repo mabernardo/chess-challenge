@@ -27,15 +27,19 @@ public class ChessChallenge {
         Queue<ChessPiece> pieces = scanPieces(scanner);
 
         boolean summaryOnly = args.length > 0 && "-s".equals(args[0]);
+        boolean showSummary = args.length > 0 && "-v".equals(args[0]);
+        ChessBoard.ComputationSummary stats;
         if (summaryOnly) {
-            ChessBoard.ComputationSummary stats = board.computeUniqueBoardCombinations(pieces);
-
-            System.out.println(stats.getCalculations() + " calculations resulted in " + stats.getUniqueBoards()
-                + " unique combinations in " + (double) stats.getElapsedTime() / 1000.0 + " seconds.");
+            stats = board.computeUniqueBoardCombinations(pieces);
 
         } else {
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
-            board.printUniqueBoardCombinations(pieces, out);
+            stats = board.printUniqueBoardCombinations(pieces, out);
+        }
+
+        if (showSummary || summaryOnly) {
+            System.out.println(stats.getCalculations() + " calculations resulted in " + stats.getUniqueBoards()
+            + " unique combinations in " + (double) stats.getElapsedTime() / 1000.0 + " seconds.");
         }
     }
 

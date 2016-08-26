@@ -9,9 +9,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import chess.challenge.ChessBoard;
-import chess.challenge.King;
-
 public class KingTest {
 
     @Test
@@ -25,7 +22,7 @@ public class KingTest {
         King king = new King(0, 1);
         assertEquals(0, king.getRank());
         assertEquals(1, king.getFile());
-        assertTrue(king.hasLimitedRange());
+        assertTrue(king instanceof LimitedThreat);
         assertEquals(PieceType.KING, king.getType());
         assertTrue("K".equals(king.getType().symbol()));
         assertTrue("Kb8".equals(king.toString()));

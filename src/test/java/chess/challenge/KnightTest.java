@@ -26,7 +26,7 @@ public class KnightTest {
         Knight knight = new Knight(0, 1);
         assertEquals(0, knight.getRank());
         assertEquals(1, knight.getFile());
-        assertTrue(knight.hasLimitedRange());
+        assertTrue(knight instanceof LimitedThreat);
         assertEquals(PieceType.KNIGHT, knight.getType());
         assertTrue("N".equals(knight.getType().symbol()));
         assertTrue("Nb8".equals(knight.toString()));

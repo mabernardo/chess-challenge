@@ -11,9 +11,7 @@ import java.util.List;
  * @version 1.0
  * @since 1.0
  */
-public class Knight extends ChessPiece {
-
-    private static final boolean LIMITED_RANGE = true;
+public class Knight extends ChessPiece implements LimitedThreat {
 
     private static final List<Point> validMoves;
     static {
@@ -32,7 +30,7 @@ public class Knight extends ChessPiece {
      * Default constructor.
      */
     public Knight() {
-        super(0, 0, LIMITED_RANGE);
+        super(0, 0);
     }
 
     /**
@@ -44,7 +42,7 @@ public class Knight extends ChessPiece {
      *            file of the piece
      */
     public Knight(int rank, int file) {
-        super(rank, file, LIMITED_RANGE);
+        super(rank, file);
     }
 
     /* (non-Javadoc)

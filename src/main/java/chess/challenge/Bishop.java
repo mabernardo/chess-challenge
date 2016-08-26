@@ -11,9 +11,7 @@ import java.util.List;
  * @version 1.0
  * @since 1.0
  */
-public class Bishop extends ChessPiece {
-
-    private static final boolean LIMITED_RANGE = false;
+public class Bishop extends ChessPiece implements UnlimitedThreat {
 
     private static final List<Point> validMoves;
     static {
@@ -28,7 +26,7 @@ public class Bishop extends ChessPiece {
      * Default constructor.
      */
     public Bishop() {
-        super(0, 0, LIMITED_RANGE);
+        super(0, 0);
     }
 
     /**
@@ -40,7 +38,7 @@ public class Bishop extends ChessPiece {
      *            file of the piece
      */
     public Bishop(int rank, int file) {
-        super(rank, file, LIMITED_RANGE);
+        super(rank, file);
     }
 
     /*

@@ -11,9 +11,7 @@ import java.util.List;
  * @version 1.0
  * @since 1.0
  */
-public class Rock extends ChessPiece {
-
-    private static final boolean LIMITED_RANGE = false;
+public class Rock extends ChessPiece implements UnlimitedThreat {
 
     private static final List<Point> validMoves;
     static {
@@ -28,7 +26,7 @@ public class Rock extends ChessPiece {
      * Default constructor.
      */
     public Rock() {
-        super(0, 0, LIMITED_RANGE);
+        super(0, 0);
     }
 
     /** 
@@ -39,7 +37,7 @@ public class Rock extends ChessPiece {
      *            file of the piece
      */
     public Rock(int rank, int file) {
-        super(rank, file, LIMITED_RANGE);
+        super(rank, file);
     }
 
     /* (non-Javadoc)
