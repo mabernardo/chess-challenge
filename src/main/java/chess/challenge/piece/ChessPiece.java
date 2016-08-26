@@ -1,6 +1,6 @@
 package chess.challenge.piece;
 
-import chess.challenge.piece.bahaviour.Threat;
+import chess.challenge.piece.behaviour.Threat;
 
 /**
  * Abstract representation of a chess piece.

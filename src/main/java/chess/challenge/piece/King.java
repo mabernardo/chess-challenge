@@ -3,7 +3,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import chess.challenge.piece.bahaviour.LimitedThreat;
+import chess.challenge.piece.behaviour.LimitedThreat;
 
 /**
  * King chess piece implementation.

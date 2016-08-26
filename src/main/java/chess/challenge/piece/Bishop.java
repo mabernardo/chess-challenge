@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import chess.challenge.piece.bahaviour.UnlimitedThreat;
+import chess.challenge.piece.behaviour.UnlimitedThreat;
 
 /**
  * Bishop chess piece implementation.

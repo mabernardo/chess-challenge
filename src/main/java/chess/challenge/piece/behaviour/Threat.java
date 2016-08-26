@@ -1,4 +1,4 @@
-package chess.challenge.piece.bahaviour;
+package chess.challenge.piece.behaviour;
 
 import java.awt.Point;
 import java.util.List;

@@ -13,7 +13,7 @@ import org.junit.Test;
 import chess.challenge.ChessBoard;
 import chess.challenge.piece.PieceType;
 import chess.challenge.piece.Queen;
-import chess.challenge.piece.bahaviour.UnlimitedThreat;
+import chess.challenge.piece.behaviour.UnlimitedThreat;
 
 public class QueenTest {
 
