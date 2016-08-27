@@ -28,9 +28,9 @@ public abstract class ChessPiece implements Threat {
     }
 
     /**
-     * Gets the symbol representing the piece.
+     * Gets the piece type.
      * 
-     * @return symbol representing the piece.
+     * @return PieceType.
      */
     public abstract PieceType getType();
 

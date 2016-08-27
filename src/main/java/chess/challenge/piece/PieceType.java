@@ -29,7 +29,7 @@ public enum PieceType {
      * Returns the PieceType with the code passed as parameter.
      * 
      * @param code Piece code.
-     * @return PieceType ith the given code.
+     * @return PieceType with the given code.
      */
     public static PieceType get(int code) {
         return codeMap.get(code);

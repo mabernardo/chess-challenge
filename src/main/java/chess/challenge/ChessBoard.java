@@ -273,7 +273,7 @@ public class ChessBoard {
         for (int[] rank : boardState) {
             for (int cell : rank) {
                 if (cell == EMPTY_MARKER || cell == THREAT_MARKER) {
-                    pw.print(".");
+                    pw.print(PieceType.NONE.symbol());
                 } else {
                     pw.print(PieceType.get(cell).symbol());
                 }
