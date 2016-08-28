@@ -39,6 +39,8 @@ public class ChessBoard {
         this.ranks = ranks;
         this.files = files;
         boardState = new PieceType[ranks][files];
+
+        // Leaving the array uninitialized had no impact on the performance.
         for (PieceType[] rank : boardState) {
             Arrays.fill(rank, PieceType.NONE);
         }
