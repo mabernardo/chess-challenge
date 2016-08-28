@@ -22,7 +22,7 @@ public class ChessBoard {
 
     private final int ranks;
     private final int files;
-    private int[][] boardState;
+    private PieceType[][] boardState;
 
     private static int calculations = 0;
     private static int uniqueBoards = 0;
@@ -38,7 +38,10 @@ public class ChessBoard {
     public ChessBoard(int ranks, int files) {
         this.ranks = ranks;
         this.files = files;
-        boardState = new int[ranks][files];
+        boardState = new PieceType[ranks][files];
+        for (PieceType[] rank : boardState) {
+            Arrays.fill(rank, PieceType.NONE);
+        }
     }
 
     /**
@@ -50,9 +53,9 @@ public class ChessBoard {
     public ChessBoard(ChessBoard board) {
         this.ranks = board.ranks;
         this.files = board.files;
-        boardState = new int[ranks][files];
+        boardState = new PieceType[ranks][files];
 
-        int[][] state = board.getBoardState();
+        PieceType[][] state = board.getBoardState();
         for (int m = 0; m < state.length; m++) {
             for (int n = 0; n < state[0].length; n++) {
                 boardState[m][n] = state[m][n];
@@ -75,18 +78,18 @@ public class ChessBoard {
      */
     public boolean putPiece(ChessPiece piece) {
         Point p = new Point(piece.getRank(), piece.getFile());
-        if (boardState[p.x][p.y] != PieceType.NONE.code()) {
+        if (boardState[p.x][p.y] != PieceType.NONE) {
             return false;
         }
 
         List<Point> threatList = piece.threatArea(this);
         for (Point tp : threatList) {
-            int cell = boardState[tp.x][tp.y];
-            if (cell != PieceType.NONE.code() && cell != PieceType.THREAT.code()) {
+            PieceType cell = boardState[tp.x][tp.y];
+            if (cell != PieceType.NONE && cell != PieceType.THREAT) {
                 return false;
             }
         }
-        boardState[p.x][p.y] = piece.getType().code();
+        boardState[p.x][p.y] = piece.getType();
         markThreatArea(threatList);
 
         return true;
@@ -99,7 +102,7 @@ public class ChessBoard {
      */
     private void markThreatArea(List<Point> threatList) {
         threatList.forEach(tp -> {
-            boardState[tp.x][tp.y] = PieceType.THREAT.code();
+            boardState[tp.x][tp.y] = PieceType.THREAT;
         });
     }
 
@@ -267,9 +270,9 @@ public class ChessBoard {
             return;
         }
 
-        for (int[] rank : boardState) {
-            for (int cell : rank) {
-                pw.print(PieceType.get(cell).symbol());
+        for (PieceType[] rank : boardState) {
+            for (PieceType cell : rank) {
+                pw.print(cell.symbol());
             }
             pw.println();
         }
@@ -284,7 +287,7 @@ public class ChessBoard {
         return files;
     }
 
-    public int[][] getBoardState() {
+    public PieceType[][] getBoardState() {
         return boardState;
     }
 
