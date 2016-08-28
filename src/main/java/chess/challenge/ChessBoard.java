@@ -22,6 +22,12 @@ public class ChessBoard {
 
     private final int ranks;
     private final int files;
+
+    /* The most obvious choice for boardState would be an array of PieceTypes,
+     * but it didn't perform as well as an array of ints.
+     * So, in terms of performance, int > enum > String.
+     * I committed a branch (EnumBoard) where this result can be verified. 
+     */
     private int[][] boardState;
 
     private static int calculations = 0;
