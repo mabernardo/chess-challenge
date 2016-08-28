@@ -8,6 +8,7 @@ import chess.challenge.ChessBoard;
 
 /**
  * Interface defining the default behaviour of piece with unlimited threat area.
+ * 
  * @author mbernardo
  * @since 3.0
  */
@@ -15,6 +16,7 @@ public interface UnlimitedThreat extends Threat {
 
     /*
      * (non-Javadoc)
+     * 
      * @see chess.challenge.Threat#threatArea(chess.challenge.ChessBoard)
      */
     @Override

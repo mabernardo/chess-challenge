@@ -46,7 +46,7 @@ public class ChessChallenge {
 
         if (showSummary || summaryOnly) {
             System.out.println(stats.getCalculations() + " calculations resulted in " + stats.getUniqueBoards()
-            + " unique combinations in " + (double) stats.getElapsedTime() / 1000.0 + " seconds.");
+                    + " unique combinations in " + (double) stats.getElapsedTime() / 1000.0 + " seconds.");
         }
     }
 

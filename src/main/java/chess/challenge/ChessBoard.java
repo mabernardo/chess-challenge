@@ -20,9 +20,6 @@ import chess.challenge.piece.PieceType;
  */
 public class ChessBoard {
 
-    private static final int THREAT_MARKER = -1;
-    private static final int EMPTY_MARKER = 0;
-
     private final int ranks;
     private final int files;
     private int[][] boardState;
@@ -78,14 +75,14 @@ public class ChessBoard {
      */
     public boolean putPiece(ChessPiece piece) {
         Point p = new Point(piece.getRank(), piece.getFile());
-        if (boardState[p.x][p.y] != EMPTY_MARKER) {
+        if (boardState[p.x][p.y] != PieceType.NONE.code()) {
             return false;
         }
 
         List<Point> threatList = piece.threatArea(this);
         for (Point tp : threatList) {
             int cell = boardState[tp.x][tp.y];
-            if (cell != EMPTY_MARKER && cell != THREAT_MARKER) {
+            if (cell != PieceType.NONE.code() && cell != PieceType.THREAT.code()) {
                 return false;
             }
         }
@@ -102,7 +99,7 @@ public class ChessBoard {
      */
     private void markThreatArea(List<Point> threatList) {
         threatList.forEach(tp -> {
-            boardState[tp.x][tp.y] = THREAT_MARKER;
+            boardState[tp.x][tp.y] = PieceType.THREAT.code();
         });
     }
 
@@ -260,7 +257,7 @@ public class ChessBoard {
     }
 
     /**
-     * Print out the board to the specified PrintStream.
+     * Print out the board to the specified PrintWriter.
      * 
      * @param pw
      *            writer where is to be printed.
@@ -272,11 +269,7 @@ public class ChessBoard {
 
         for (int[] rank : boardState) {
             for (int cell : rank) {
-                if (cell == EMPTY_MARKER || cell == THREAT_MARKER) {
-                    pw.print(PieceType.NONE.symbol());
-                } else {
-                    pw.print(PieceType.get(cell).symbol());
-                }
+                pw.print(PieceType.get(cell).symbol());
             }
             pw.println();
         }

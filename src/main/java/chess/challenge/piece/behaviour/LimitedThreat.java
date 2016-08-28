@@ -1,6 +1,3 @@
-/**
- * 
- */
 package chess.challenge.piece.behaviour;
 
 import java.awt.Point;
@@ -20,6 +17,7 @@ public interface LimitedThreat extends Threat {
 
     /*
      * (non-Javadoc)
+     * 
      * @see chess.challenge.Threat#threatArea(chess.challenge.ChessBoard)
      */
     @Override
