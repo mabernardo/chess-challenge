@@ -1,7 +1,10 @@
 apply plugin: 'java'
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
 version = '3.0'
+
+mainClassName = "chess.challenge.ChessChallenge"
 
 jar {
     manifest {
@@ -10,6 +13,13 @@ jar {
                    'Main-Class': 'chess.challenge.ChessChallenge' 
     }
     archiveName 'chess-challenge.jar'
+}
+
+run {
+    standardInput = System.in
+    if(System.getProperty("args") != null) {
+        args System.getProperty("args").split()
+    }
 }
 
 repositories {
