@@ -27,13 +27,13 @@ public interface LimitedThreat extends Threat {
         List<Point> threats = new ArrayList<>();
         Point p = new Point(this.getRank(), this.getFile());
 
-        for (Point p1 : this.getValidMoves()) {
+        this.getValidMoves().forEach(p1 -> {
             int x1 = p.x + p1.x;
             int y1 = p.y + p1.y;
             if ((x1 >= 0 && x1 < board.getRanks()) && (y1 >= 0 && y1 < board.getFiles())) {
                 threats.add(new Point(x1, y1));
             }
-        }
+        });
         return threats;
     }
 

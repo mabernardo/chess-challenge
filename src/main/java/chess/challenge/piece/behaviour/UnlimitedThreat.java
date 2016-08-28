@@ -22,7 +22,7 @@ public interface UnlimitedThreat extends Threat {
         List<Point> threats = new ArrayList<>();
         Point p = new Point(this.getRank(), this.getFile());
 
-        for (Point p1 : this.getValidMoves()) {
+        this.getValidMoves().forEach(p1 -> {
             int x1 = p.x + p1.x;
             int y1 = p.y + p1.y;
             int distance = 1;
@@ -32,7 +32,7 @@ public interface UnlimitedThreat extends Threat {
                 x1 = p.x + p1.x * distance;
                 y1 = p.y + p1.y * distance;
             }
-        }
+        });
         return threats;
     }
 

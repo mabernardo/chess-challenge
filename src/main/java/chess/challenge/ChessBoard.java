@@ -101,9 +101,9 @@ public class ChessBoard {
      * @param threatList
      */
     private void markThreatArea(List<Point> threatList) {
-        for (Point tp : threatList) {
+        threatList.forEach(tp -> {
             boardState[tp.x][tp.y] = THREAT_MARKER;
-        }
+        });
     }
 
     /**
